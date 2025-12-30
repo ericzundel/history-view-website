@@ -13,7 +13,7 @@ I am building a visualization of my browsing history to make some interesting co
 - Linting/formatting/testing:
   - ESLint (with TypeScript config) + Prettier.
   - Vitest for unit/component coverage; create representative UI tests.
-  - Python tooling formatted and linted with Ruff, type-checked with `pyright` (or `typer`? user said "ty"? need interpret; maybe "pyright"? but user wrote "ty" maybe "pyright"? Hmm "Python formatting and typechecking should use ruff + ty". maybe "ty" is `pytype`? maybe `typing`? Could be tool "pyright"? "ty" ??? Hmm there is CLI "pytype"? Could "ty" mean "pyright"? but fosters? maybe "pyproject tool `ty`"? w/out clarity ask later, but spec should capture requirement as `ty`. We'll write "ty (type checker)".*** reread instructions: "Python formatting and typechecking should use ruff + ty". There is tool "pyright"? But specify as given.***
+  - Python tooling formatted and linted with Ruff, type-checked with `pyright` and `mypy`
   - Provide tests for both UI components and Python scripts.
 - Shell scripts manage development workflows.
 - Data cleaning and transformation tooling is written in Python 3.14, with typing, executed via the `uv` environment manager (assumed installed).
