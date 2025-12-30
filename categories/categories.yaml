@@ -1,0 +1,3 @@
+# Category definitions for browsing history classification.
+# TODO: Populate with ~40 primary categories (include `type: primary`) followed by ~200 secondary categories.
+categories: []
