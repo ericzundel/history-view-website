@@ -2,608 +2,632 @@
 # Primary categories appear first with `type: primary`. Secondary categories omit `type`.
 categories:
   # Primary categories
-  - tag: '#news'
+  - tag: 'news'
     label: News
     type: primary
-  - tag: '#social'
+  - tag: 'social'
     label: Social Media
     type: primary
-  - tag: '#search_discovery'
+  - tag: 'searchdiscovery'
     label: Search & Discovery
     type: primary
-  - tag: '#software_dev'
+  - tag: 'softwaredev'
     label: Software Development
     type: primary
-  - tag: '#data_ai'
+  - tag: 'dataai'
     label: Data & AI
     type: primary
-  - tag: '#design_creative'
+  - tag: 'designcreative'
     label: Design & Creative
     type: primary
-  - tag: '#productivity'
+  - tag: 'productivity'
     label: Productivity & Organization
     type: primary
-  - tag: '#messaging_chat'
+  - tag: 'messagingchat'
     label: Messaging & Chat
     type: primary
-  - tag: '#email_calendar'
+  - tag: 'emailcalendar'
     label: Email & Calendar
     type: primary
-  - tag: '#commerce_shopping'
+  - tag: 'commerceshopping'
     label: Commerce & Shopping
     type: primary
-  - tag: '#finance_personal'
+  - tag: 'financepersonal'
     label: Personal Finance
     type: primary
-  - tag: '#banking_payments'
+  - tag: 'bankingpayments'
     label: Banking & Payments
     type: primary
-  - tag: '#investing_wealth'
+  - tag: 'investingwealth'
     label: Investing & Wealth
     type: primary
-  - tag: '#insurance'
+  - tag: 'insurance'
     label: Insurance
     type: primary
-  - tag: '#health_medical'
+  - tag: 'healthmedical'
     label: Health & Medical
     type: primary
-  - tag: '#fitness_wellness'
+  - tag: 'fitnesswellness'
     label: Fitness & Wellness
     type: primary
-  - tag: '#food_cooking'
+  - tag: 'foodcooking'
     label: Food & Cooking
     type: primary
-  - tag: '#travel'
+  - tag: 'travel'
     label: Travel
     type: primary
-  - tag: '#transportation_mobility'
+  - tag: 'transportationmobility'
     label: Transportation & Mobility
     type: primary
-  - tag: '#government_services'
+  - tag: 'governmentservices'
     label: Government Services
     type: primary
-  - tag: '#politics_civics'
+  - tag: 'politicscivics'
     label: Politics & Civics
     type: primary
-  - tag: '#legal'
+  - tag: 'legal'
     label: Legal
     type: primary
-  - tag: '#education_learning'
+  - tag: 'educationlearning'
     label: Education & Learning
     type: primary
-  - tag: '#research_academic'
+  - tag: 'researchacademic'
     label: Research & Academia
     type: primary
-  - tag: '#science_engineering'
+  - tag: 'scienceengineering'
     label: Science & Engineering
     type: primary
-  - tag: '#hardware_gadgets'
+  - tag: 'hardwaregadgets'
     label: Hardware & Gadgets
     type: primary
-  - tag: '#gaming'
+  - tag: 'gaming'
     label: Gaming
     type: primary
-  - tag: '#entertainment_video'
+  - tag: 'entertainmentvideo'
     label: Entertainment & Video
     type: primary
-  - tag: '#music_audio'
+  - tag: 'musicaudio'
     label: Music & Audio
     type: primary
-  - tag: '#photos_media_creation'
+  - tag: 'photosmediacreation'
     label: Photos & Media Creation
     type: primary
-  - tag: '#sports'
+  - tag: 'sports'
     label: Sports
     type: primary
-  - tag: '#home_garden'
+  - tag: 'homegarden'
     label: Home & Garden
     type: primary
-  - tag: '#real_estate'
+  - tag: 'realestate'
     label: Real Estate
     type: primary
-  - tag: '#career_jobs'
+  - tag: 'careerjobs'
     label: Careers & Jobs
     type: primary
-  - tag: '#business_ops'
+  - tag: 'businessops'
     label: Business Operations
     type: primary
-  - tag: '#nonprofit_philanthropy'
+  - tag: 'nonprofitphilanthropy'
     label: Nonprofit & Philanthropy
     type: primary
-  - tag: '#religion_spirituality'
+  - tag: 'religionspirituality'
     label: Religion & Spirituality
     type: primary
-  - tag: '#parenting_family'
+  - tag: 'parentingfamily'
     label: Parenting & Family
     type: primary
-  - tag: '#pets_animals'
+  - tag: 'petsanimals'
     label: Pets & Animals
     type: primary
-  - tag: '#security_privacy'
+  - tag: 'securityprivacy'
     label: Security & Privacy
     type: primary
 
   # Secondary categories
   # News
-  - tag: '#world_news'
+  - tag: 'worldnews'
     label: World News
-  - tag: '#local_news'
+  - tag: 'localnews'
     label: Local News
-  - tag: '#investigative_news'
+  - tag: 'investigativenews'
     label: Investigative News
-  - tag: '#tech_news'
+  - tag: 'technews'
     label: Technology News
-  - tag: '#finance_news'
+  - tag: 'financenews'
     label: Finance & Markets News
 
   # Social
-  - tag: '#microblogging'
+  - tag: 'microblogging'
     label: Microblogging
-  - tag: '#forums'
+  - tag: 'forums'
     label: Forums & Message Boards
-  - tag: '#photo_sharing'
+  - tag: 'photosharing'
     label: Photo Sharing
-  - tag: '#professional_networking'
+  - tag: 'professionalnetworking'
     label: Professional Networking
-  - tag: '#community_groups'
+  - tag: 'communitygroups'
     label: Community Groups
 
   # Search & Discovery
-  - tag: '#web_search'
+  - tag: 'websearch'
     label: Web Search
-  - tag: '#shopping_search'
+  - tag: 'shoppingsearch'
     label: Shopping Search
-  - tag: '#academic_search'
+  - tag: 'academicsearch'
     label: Academic Search
-  - tag: '#vertical_search'
+  - tag: 'verticalsearch'
     label: Vertical/Domain-Specific Search
 
   # Software Development
-  - tag: '#web_dev'
+  - tag: 'webdev'
     label: Web Development
-  - tag: '#backend_dev'
+  - tag: 'backenddev'
     label: Backend Development
-  - tag: '#frontend_dev'
+  - tag: 'frontenddev'
     label: Frontend Development
-  - tag: '#mobile_dev'
+  - tag: 'mobiledev'
     label: Mobile Development
-  - tag: '#dev_tools'
+  - tag: 'devtools'
     label: Developer Tools
-  - tag: '#version_control'
+  - tag: 'versioncontrol'
     label: Version Control
-  - tag: '#apis_integrations'
+  - tag: 'apisintegrations'
     label: APIs & Integrations
+  - tag: 'python'
+    label: Python
+  - tag: 'javascript'
+    label: JavaScript
+  - tag: 'java'
+    label: Java
+  - tag: 'csharp'
+    label: C#
+  - tag: 'cpp'
+    label: C++
+  - tag: 'php'
+    label: PHP
+  - tag: 'typescript'
+    label: TypeScript
+  - tag: 'ruby'
+    label: Ruby
+  - tag: 'go'
+    label: Go
+  - tag: 'swift'
+    label: Swift
+  - tag: 'kotlin'
+    label: Kotlin
+  - tag: 'rust'
+    label: Rust
 
   # Data & AI
-  - tag: '#ml_platforms'
+  - tag: 'mlplatforms'
     label: ML Platforms
-  - tag: '#data_science'
+  - tag: 'datascience'
     label: Data Science
-  - tag: '#data_visualization'
+  - tag: 'datavisualization'
     label: Data Visualization
-  - tag: '#data_engineering'
+  - tag: 'dataengineering'
     label: Data Engineering
-  - tag: '#databases'
+  - tag: 'databases'
     label: Databases
-  - tag: '#generative_ai'
+  - tag: 'generativeai'
     label: Generative AI
 
   # Design & Creative
-  - tag: '#ui_design'
+  - tag: 'uidesign'
     label: UI Design
-  - tag: '#ux_research'
+  - tag: 'uxresearch'
     label: UX Research
-  - tag: '#illustration'
+  - tag: 'illustration'
     label: Illustration
-  - tag: '#3d_design'
+  - tag: '3ddesign'
     label: 3D Design
-  - tag: '#photo_editing'
+  - tag: 'photoediting'
     label: Photo Editing
 
   # Productivity & Organization
-  - tag: '#task_management'
+  - tag: 'taskmanagement'
     label: Task Management
-  - tag: '#note_taking'
+  - tag: 'notetaking'
     label: Note Taking
-  - tag: '#project_management'
+  - tag: 'projectmanagement'
     label: Project Management
-  - tag: '#time_tracking'
+  - tag: 'timetracking'
     label: Time Tracking
-  - tag: '#personal_knowledge'
+  - tag: 'personalknowledge'
     label: Personal Knowledge Bases
 
   # Messaging & Chat
-  - tag: '#sms'
+  - tag: 'sms'
     label: SMS
-  - tag: '#instant_messaging'
+  - tag: 'instantmessaging'
     label: Instant Messaging
-  - tag: '#group_chat'
+  - tag: 'groupchat'
     label: Group Chat
-  - tag: '#workplace_chat'
+  - tag: 'workplacechat'
     label: Workplace Chat
-  - tag: '#video_calls'
+  - tag: 'videocalls'
     label: Video Calls
 
   # Email & Calendar
-  - tag: '#webmail'
+  - tag: 'webmail'
     label: Webmail
-  - tag: '#calendar'
+  - tag: 'calendar'
     label: Calendars
-  - tag: '#contacts'
+  - tag: 'contacts'
     label: Contacts
-  - tag: '#email_marketing'
+  - tag: 'emailmarketing'
     label: Email Marketing
 
   # Commerce & Shopping
-  - tag: '#marketplaces'
+  - tag: 'marketplaces'
     label: Marketplaces
-  - tag: '#brand_stores'
+  - tag: 'brandstores'
     label: Brand Stores
-  - tag: '#price_comparison'
+  - tag: 'pricecomparison'
     label: Price Comparison
-  - tag: '#coupons_deals'
+  - tag: 'couponsdeals'
     label: Coupons & Deals
-  - tag: '#food_delivery'
+  - tag: 'fooddelivery'
     label: Food Delivery
-  - tag: '#groceries'
+  - tag: 'groceries'
     label: Groceries & Household
 
   # Personal Finance
-  - tag: '#budgeting'
+  - tag: 'budgeting'
     label: Budgeting
-  - tag: '#credit_monitoring'
+  - tag: 'creditmonitoring'
     label: Credit Monitoring
-  - tag: '#tax_prep'
+  - tag: 'taxprep'
     label: Tax Preparation
-  - tag: '#loans'
+  - tag: 'loans'
     label: Loans & Lending
-  - tag: '#financial_planning'
+  - tag: 'financialplanning'
     label: Financial Planning
 
   # Banking & Payments
-  - tag: '#online_banking'
+  - tag: 'onlinebanking'
     label: Online Banking
-  - tag: '#digital_wallets'
+  - tag: 'digitalwallets'
     label: Digital Wallets
-  - tag: '#bill_payments'
+  - tag: 'billpayments'
     label: Bill Payments
-  - tag: '#peer_payments'
+  - tag: 'peerpayments'
     label: Peer-to-Peer Payments
 
   # Investing & Wealth
-  - tag: '#brokerages'
+  - tag: 'brokerages'
     label: Brokerages
-  - tag: '#robo_advisors'
+  - tag: 'roboadvisors'
     label: Robo-Advisors
-  - tag: '#crypto_exchanges'
+  - tag: 'cryptoexchanges'
     label: Crypto Exchanges
-  - tag: '#portfolio_trackers'
+  - tag: 'portfoliotrackers'
     label: Portfolio Trackers
-  - tag: '#research_reports'
+  - tag: 'researchreports'
     label: Investment Research
-  - tag: '#options_trading'
+  - tag: 'optionstrading'
     label: Options Trading
 
   # Insurance
-  - tag: '#health_insurance'
+  - tag: 'healthinsurance'
     label: Health Insurance
-  - tag: '#auto_insurance'
+  - tag: 'autoinsurance'
     label: Auto Insurance
-  - tag: '#home_insurance'
+  - tag: 'homeinsurance'
     label: Home Insurance
-  - tag: '#life_insurance'
+  - tag: 'lifeinsurance'
     label: Life Insurance
 
   # Health & Medical
-  - tag: '#medical_info'
+  - tag: 'medicalinfo'
     label: Medical Information
-  - tag: '#telehealth'
+  - tag: 'telehealth'
     label: Telehealth
-  - tag: '#pharmacies'
+  - tag: 'pharmacies'
     label: Pharmacies
-  - tag: '#patient_portals'
+  - tag: 'patientportals'
     label: Patient Portals
-  - tag: '#mental_health'
+  - tag: 'mentalhealth'
     label: Mental Health
-  - tag: '#medical_research'
+  - tag: 'medicalresearch'
     label: Medical Research
 
   # Fitness & Wellness
-  - tag: '#workouts'
+  - tag: 'workouts'
     label: Workouts & Training
-  - tag: '#activity_tracking'
+  - tag: 'activitytracking'
     label: Activity Tracking
-  - tag: '#mindfulness'
+  - tag: 'mindfulness'
     label: Mindfulness
-  - tag: '#sleep'
+  - tag: 'sleep'
     label: Sleep & Recovery
-  - tag: '#diets'
+  - tag: 'diets'
     label: Diets & Nutrition Plans
 
   # Food & Cooking
-  - tag: '#recipes'
+  - tag: 'recipes'
     label: Recipes
-  - tag: '#restaurants'
+  - tag: 'restaurants'
     label: Restaurants
-  - tag: '#meal_planning'
+  - tag: 'mealplanning'
     label: Meal Planning
-  - tag: '#kitchen_tools'
+  - tag: 'kitchentools'
     label: Kitchen Tools
-  - tag: '#beverages'
+  - tag: 'beverages'
     label: Beverages & Coffee
 
   # Travel
-  - tag: '#flights'
+  - tag: 'flights'
     label: Flights
-  - tag: '#hotels'
+  - tag: 'hotels'
     label: Hotels
-  - tag: '#vacation_rentals'
+  - tag: 'vacationrentals'
     label: Vacation Rentals
-  - tag: '#travel_planning'
+  - tag: 'travelplanning'
     label: Travel Planning
-  - tag: '#travel_guides'
+  - tag: 'travelguides'
     label: Travel Guides
 
   # Transportation & Mobility
-  - tag: '#rideshare'
+  - tag: 'rideshare'
     label: Rideshare
-  - tag: '#public_transit'
+  - tag: 'publictransit'
     label: Public Transit
-  - tag: '#micromobility'
+  - tag: 'micromobility'
     label: Micromobility
-  - tag: '#automotive_info'
+  - tag: 'automotiveinfo'
     label: Automotive Info
-  - tag: '#navigation'
+  - tag: 'navigation'
     label: Navigation & Maps
 
   # Government Services
-  - tag: '#city_services'
+  - tag: 'cityservices'
     label: City Services
-  - tag: '#permits'
+  - tag: 'permits'
     label: Permits & Licensing
-  - tag: '#taxes_fees'
+  - tag: 'taxesfees'
     label: Taxes & Fees
-  - tag: '#public_records'
+  - tag: 'publicrecords'
     label: Public Records
-  - tag: '#public_safety'
+  - tag: 'publicsafety'
     label: Public Safety
 
   # Politics & Civics
-  - tag: '#campaigns'
+  - tag: 'campaigns'
     label: Campaigns & Candidates
-  - tag: '#voting_info'
+  - tag: 'votinginfo'
     label: Voting Information
-  - tag: '#civic_orgs'
+  - tag: 'civicorgs'
     label: Civic Organizations
-  - tag: '#policy_analysis'
+  - tag: 'policyanalysis'
     label: Policy Analysis
-  - tag: '#activism'
+  - tag: 'activism'
     label: Activism & Advocacy
 
   # Legal
-  - tag: '#legal_research'
+  - tag: 'legalresearch'
     label: Legal Research
-  - tag: '#contracts'
+  - tag: 'contracts'
     label: Contracts & Templates
-  - tag: '#compliance'
+  - tag: 'compliance'
     label: Compliance
-  - tag: '#ip_law'
+  - tag: 'iplaw'
     label: IP Law
-  - tag: '#legal_services'
+  - tag: 'legalservices'
     label: Legal Services
 
   # Education & Learning
-  - tag: '#online_courses'
+  - tag: 'onlinecourses'
     label: Online Courses
-  - tag: '#k12_resources'
+  - tag: 'k12resources'
     label: K-12 Resources
-  - tag: '#college_info'
+  - tag: 'collegeinfo'
     label: College Information
-  - tag: '#language_learning'
+  - tag: 'languagelearning'
     label: Language Learning
-  - tag: '#study_tools'
+  - tag: 'studytools'
     label: Study Tools
-  - tag: '#test_prep'
+  - tag: 'testprep'
     label: Test Prep
-  - tag: '#certification_programs'
+  - tag: 'certificationprograms'
     label: Certification Programs
 
   # Research & Academia
-  - tag: '#journals'
+  - tag: 'journals'
     label: Academic Journals
-  - tag: '#preprints'
+  - tag: 'preprints'
     label: Preprints
-  - tag: '#datasets_repos'
+  - tag: 'datasetsrepos'
     label: Datasets & Repos
-  - tag: '#academic_profiles'
+  - tag: 'academicprofiles'
     label: Academic Profiles
-  - tag: '#citations_tools'
+  - tag: 'citationstools'
     label: Citation Tools
 
   # Science & Engineering
-  - tag: '#space_science'
+  - tag: 'spacescience'
     label: Space Science
-  - tag: '#physics'
+  - tag: 'physics'
     label: Physics
-  - tag: '#chemistry'
+  - tag: 'chemistry'
     label: Chemistry
-  - tag: '#biology'
+  - tag: 'biology'
     label: Biology
-  - tag: '#climate_science'
+  - tag: 'climatescience'
     label: Climate Science
 
   # Hardware & Gadgets
-  - tag: '#laptops'
+  - tag: 'laptops'
     label: Laptops
-  - tag: '#mobile_devices'
+  - tag: 'mobiledevices'
     label: Mobile Devices
-  - tag: '#pc_components'
+  - tag: 'pccomponents'
     label: PC Components
-  - tag: '#smart_home'
+  - tag: 'smarthome'
     label: Smart Home
-  - tag: '#wearables'
+  - tag: 'wearables'
     label: Wearables
-  - tag: '#maker_hardware'
+  - tag: 'makerhardware'
     label: Maker Hardware
 
   # Gaming
-  - tag: '#pc_gaming'
+  - tag: 'pcgaming'
     label: PC Gaming
-  - tag: '#console_gaming'
+  - tag: 'consolegaming'
     label: Console Gaming
-  - tag: '#mobile_gaming'
+  - tag: 'mobilegaming'
     label: Mobile Gaming
-  - tag: '#game_reviews'
+  - tag: 'gamereviews'
     label: Game Reviews
-  - tag: '#esports'
+  - tag: 'esports'
     label: Esports
 
   # Entertainment & Video
-  - tag: '#streaming_video'
+  - tag: 'streamingvideo'
     label: Streaming Video
-  - tag: '#short_video'
+  - tag: 'shortvideo'
     label: Short Video
-  - tag: '#movies_info'
+  - tag: 'moviesinfo'
     label: Movies & Film
-  - tag: '#tv_guides'
+  - tag: 'tvguides'
     label: TV Guides
-  - tag: '#video_reviews'
+  - tag: 'videoreviews'
     label: Video Reviews
 
   # Music & Audio
-  - tag: '#music_streaming'
+  - tag: 'musicstreaming'
     label: Music Streaming
-  - tag: '#podcasts'
+  - tag: 'podcasts'
     label: Podcasts
-  - tag: '#audio_gear'
+  - tag: 'audiogear'
     label: Audio Gear
-  - tag: '#music_reviews'
+  - tag: 'musicreviews'
     label: Music Reviews
-  - tag: '#live_music'
+  - tag: 'livemusic'
     label: Live Music
 
   # Photos & Media Creation
-  - tag: '#photo_hosting'
+  - tag: 'photohosting'
     label: Photo Hosting
-  - tag: '#video_editing'
+  - tag: 'videoediting'
     label: Video Editing
-  - tag: '#livestreaming_tools'
+  - tag: 'livestreamingtools'
     label: Livestreaming Tools
-  - tag: '#stock_media'
+  - tag: 'stockmedia'
     label: Stock Media
-  - tag: '#creative_marketplaces'
+  - tag: 'creativemarketplaces'
     label: Creative Marketplaces
 
   # Sports
-  - tag: '#scores_results'
+  - tag: 'scoresresults'
     label: Scores & Results
-  - tag: '#fantasy_sports'
+  - tag: 'fantasysports'
     label: Fantasy Sports
-  - tag: '#team_sites'
+  - tag: 'teamsites'
     label: Team Sites
-  - tag: '#outdoor_sports'
+  - tag: 'outdoorsports'
     label: Outdoor Sports
-  - tag: '#endurance_sports'
+  - tag: 'endurancesports'
     label: Endurance Sports
 
   # Home & Garden
-  - tag: '#home_improvement'
+  - tag: 'homeimprovement'
     label: Home Improvement
-  - tag: '#interior_design'
+  - tag: 'interiordesign'
     label: Interior Design
-  - tag: '#gardening'
+  - tag: 'gardening'
     label: Gardening
-  - tag: '#appliances'
+  - tag: 'appliances'
     label: Appliances
-  - tag: '#diy_projects'
+  - tag: 'diyprojects'
     label: DIY Projects
 
   # Real Estate
-  - tag: '#listings'
+  - tag: 'listings'
     label: Home Listings
-  - tag: '#rentals'
+  - tag: 'rentals'
     label: Rentals
-  - tag: '#mortgage_rates'
+  - tag: 'mortgagerates'
     label: Mortgage Rates
-  - tag: '#home_valuation'
+  - tag: 'homevaluation'
     label: Home Valuation
-  - tag: '#moving_services'
+  - tag: 'movingservices'
     label: Moving Services
 
   # Careers & Jobs
-  - tag: '#job_boards'
+  - tag: 'jobboards'
     label: Job Boards
-  - tag: '#professional_profiles'
+  - tag: 'professionalprofiles'
     label: Professional Profiles
-  - tag: '#resume_builders'
+  - tag: 'resumebuilders'
     label: Resume Builders
-  - tag: '#interview_prep'
+  - tag: 'interviewprep'
     label: Interview Prep
-  - tag: '#salary_research'
+  - tag: 'salaryresearch'
     label: Salary Research
 
   # Business Operations
-  - tag: '#crm_tools'
+  - tag: 'crmtools'
     label: CRM Tools
-  - tag: '#accounting'
+  - tag: 'accounting'
     label: Accounting
-  - tag: '#hr_tools'
+  - tag: 'hrtools'
     label: HR & Benefits
-  - tag: '#procurement'
+  - tag: 'procurement'
     label: Procurement
-  - tag: '#business_news'
+  - tag: 'businessnews'
     label: Business News
 
   # Nonprofit & Philanthropy
-  - tag: '#donations'
+  - tag: 'donations'
     label: Donations
-  - tag: '#volunteering'
+  - tag: 'volunteering'
     label: Volunteering
-  - tag: '#grants'
+  - tag: 'grants'
     label: Grants & Funding
-  - tag: '#ngo_resources'
+  - tag: 'ngoresources'
     label: NGO Resources
 
   # Religion & Spirituality
-  - tag: '#faith_education'
+  - tag: 'faitheducation'
     label: Faith Education
-  - tag: '#places_of_worship'
+  - tag: 'placesofworship'
     label: Places of Worship
-  - tag: '#inspirational_media'
+  - tag: 'inspirationalmedia'
     label: Inspirational Media
-  - tag: '#charity_outreach'
+  - tag: 'charityoutreach'
     label: Charity Outreach
 
   # Parenting & Family
-  - tag: '#pregnancy'
+  - tag: 'pregnancy'
     label: Pregnancy & Birth
-  - tag: '#childcare'
+  - tag: 'childcare'
     label: Childcare
-  - tag: '#family_activities'
+  - tag: 'familyactivities'
     label: Family Activities
-  - tag: '#education_planning'
+  - tag: 'educationplanning'
     label: Education Planning
 
   # Pets & Animals
-  - tag: '#pet_care'
+  - tag: 'petcare'
     label: Pet Care
-  - tag: '#pet_health'
+  - tag: 'pethealth'
     label: Pet Health
-  - tag: '#pet_supplies'
+  - tag: 'petsupplies'
     label: Pet Supplies
-  - tag: '#wildlife'
+  - tag: 'wildlife'
     label: Wildlife & Nature
-  - tag: '#animal_rescue'
+  - tag: 'animalrescue'
     label: Animal Rescue
 
   # Security & Privacy
-  - tag: '#password_managers'
+  - tag: 'passwordmanagers'
     label: Password Managers
-  - tag: '#vpn'
+  - tag: 'vpn'
     label: VPN & Secure Browsing
-  - tag: '#infosec_news'
+  - tag: 'infosecnews'
     label: InfoSec News
-  - tag: '#identity_protection'
+  - tag: 'identityprotection'
     label: Identity Protection
-  - tag: '#privacy_tools'
+  - tag: 'privacytools'
     label: Privacy Tools

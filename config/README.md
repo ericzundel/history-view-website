@@ -2,7 +2,7 @@
 
 The category system classifies domains and visit data for drill-down views:
 
-- Primary categories: high-level buckets (e.g., `#news`, `#social`, `#software_dev`).
+- Primary categories: high-level buckets (e.g., `#news`, `#social`, `#softwaredev`).
 - Secondary categories: more specific tags mapped under the primaries (e.g., `#python`, `#spreadsheets`, `#worldnews`).
 
 Domain-to-category mapping:
@@ -15,14 +15,14 @@ domains:
   - domain: example.com
     primary: '#news'
     secondary:
-      - '#tech_news'
-      - '#world_news'
+      - '#technews'
+      - '#worldnews'
 ```
 
 Workflow:
 
 1. Edit `categories.yaml` to add or adjust categories. Keep primary categories grouped at the top with `type: primary`; omit `type` for secondary tags.
-2. Keep tags as lowercase hashtags without spaces; use `label` for display text.
+2. Keep tags as lowercase hashtags without spaces or underscores; concatenate words (e.g., `#softwaredev`, `#technews`). Use `label` for display text.
 3. Downstream scripts read this file to map domains to categories and to populate overlay data sets.
 
 Domain blocklist:
