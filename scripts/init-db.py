@@ -75,7 +75,7 @@ def init_db(db_path: Path, force: bool) -> None:
 
     with sqlite3.connect(db_path) as conn:
         conn.executescript(SCHEMA)
-        conn.commit()
+        # conn.commit() # Not needed when using `with` context manager
 
     print(f"Initialized database schema at {db_path}")
 
