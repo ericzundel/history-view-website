@@ -24,9 +24,12 @@
 
 ## Git Hooks
 
+- Install `pre-commit` if missing (e.g., `uv tool install pre-commit` or `uvx pre-commit --version`).
 - Enable hooks: `pre-commit install`.
-- Hooks format with Prettier, lint with ESLint, run TypeScript `npm run typecheck`, and block direct commits to `main` (override with `ALLOW_MAIN_HOTFIX=1` for emergency commits).
-- Update hook versions: `pre-commit autoupdate`.
+- Hooks block direct commits to `main` (override with `ALLOW_MAIN_HOTFIX=1` for emergency commits).
+- Formatting/linting/type-checking run only when matching files are staged (Prettier for text assets, ESLint for JS/TS, `npm run typecheck` when TS files change). Vitest runs on JS/TS changes.
+- Update hook versions: `npm run hooks:update` (or `pre-commit autoupdate`).
+- Rare emergencies only: bypass hooks with `git commit --no-verify` (avoid for normal work).
 
 ## Data workflow (high level)
 

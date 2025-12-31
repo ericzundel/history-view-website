@@ -12,7 +12,8 @@
     "format:fix": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "hooks:update": "pre-commit autoupdate"
   },
   "dependencies": {
     "react": "^18.3.1",

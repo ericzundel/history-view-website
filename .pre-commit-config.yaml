@@ -39,36 +39,21 @@ repos:
             exit 1
         language: system
         pass_filenames: false
-        stages:
-          - commit
 
       - id: format-prettier
         name: Format with Prettier
-        entry: bash
-        args:
-          - -c
-          - |
-            set -euo pipefail
-            cd "$(git rev-parse --show-toplevel)"
-            npm run format:fix
+        entry: npx prettier
+        args: ['--write']
         language: system
-        pass_filenames: false
-        stages:
-          - commit
+        files: "\\.(tsx?|jsx?|json|css|md|ya?ml)$"
+        types_or: [text]
 
       - id: lint-eslint
         name: Lint TypeScript/React
-        entry: bash
-        args:
-          - -c
-          - |
-            set -euo pipefail
-            cd "$(git rev-parse --show-toplevel)"
-            npm run lint
+        entry: npx eslint
+        args: ['--max-warnings=0']
         language: system
-        pass_filenames: false
-        stages:
-          - commit
+        files: "\\.(tsx?|ts|jsx?|mts|cts)$"
 
       - id: typecheck-tsc
         name: Type-check TypeScript
@@ -77,9 +62,18 @@ repos:
           - -c
           - |
             set -euo pipefail
-            cd "$(git rev-parse --show-toplevel)"
+            if [ "$#" -eq 0 ]; then
+              exit 0
+            fi
             npm run typecheck
+          - --
+        language: system
+        files: "\\.(tsx?|ts|mts|cts)$"
+
+      - id: test-vitest
+        name: Run Vitest suite
+        entry: npx vitest
+        args: ['run', '--passWithNoTests']
         language: system
         pass_filenames: false
-        stages:
-          - commit
+        files: "\\.(tsx?|ts|jsx?|mts|cts)$"

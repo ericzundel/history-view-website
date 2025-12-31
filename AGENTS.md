@@ -13,7 +13,7 @@ Context to get up to speed quickly on this repo.
 
 - Front-end: Vite + TypeScript (strict), modern browsers only. Provide bubble-heatmap + treemap overlays with animations and client-side routing.
 - Node: use `nvm` with Node 24.
-- Python: 3.14 managed via `uv`; tooling uses Ruff + mypy + pyright; tests required.
+- Python: 3.14 managed via `uv` (install deps with `uv pip install -r requirements.txt` / tools via `uvx`); tooling uses Ruff + mypy + pyright; tests required.
 - Deployment: static assets via `scp` to shared hosting using `.env` variables; Apache `.htaccess` routing assumed.
 - Git hooks should enforce lint/format/type checks.
 
