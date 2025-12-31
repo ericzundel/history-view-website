@@ -11,34 +11,9 @@ from __future__ import annotations
 import argparse
 import sqlite3
 from pathlib import Path
-from textwrap import dedent
 
-
-SCHEMA = dedent(
-    """
-    PRAGMA foreign_keys = ON;
-
-    CREATE TABLE IF NOT EXISTS visits (
-      id INTEGER PRIMARY KEY,
-      domain TEXT NOT NULL,
-      timestamp TEXT NOT NULL
-    );
-
-    CREATE TABLE IF NOT EXISTS domains (
-      domain TEXT PRIMARY KEY,
-      title TEXT,
-      num_visits INTEGER NOT NULL,
-      checked BOOLEAN NOT NULL CHECK (checked IN (0, 1)),
-      check_timestamp TEXT,
-      favicon_type TEXT,
-      favicon_data BLOB,
-      main_category TEXT
-    );
-
-    CREATE INDEX IF NOT EXISTS idx_visits_domain_timestamp ON visits(domain, timestamp);
-    CREATE INDEX IF NOT EXISTS idx_visits_timestamp_domain ON visits(timestamp, domain);
-    """
-).strip()
+from lib.history_db import SCHEMA
+from lib.history_db import resolve_db_path as resolve_db_path_from_lib
 
 
 def parse_args() -> argparse.Namespace:
@@ -55,13 +30,6 @@ def parse_args() -> argparse.Namespace:
         help="Overwrite existing database file if present.",
     )
     return parser.parse_args()
-
-
-def resolve_db_path(db_arg: Path | None) -> Path:
-    script_dir = Path(__file__).resolve().parent
-    repo_root = script_dir.parent
-    default_path = repo_root / "data" / "history.db"
-    return db_arg if db_arg is not None else default_path
 
 
 def init_db(db_path: Path, force: bool) -> None:
@@ -82,7 +50,7 @@ def init_db(db_path: Path, force: bool) -> None:
 
 def main() -> None:
     args = parse_args()
-    db_path = resolve_db_path(args.db)
+    db_path = resolve_db_path_from_lib(args.db)
     init_db(db_path, args.force)
 
 

@@ -12,6 +12,7 @@ I am building a visualization of my browsing history to make interesting content
 - All data-preparation tooling is executed manually during explicit data-prep runs.
 - The goal is exploratory and interesting insight into browsing behavior rather than formal analytics.
 - Overall tone should be engaging and informative, not playful or gimmicky.
+- A github icon should be placed inconspicuously in the top right of the top level page that will link to the github repo for this project `https://github.com/ericzundel/history-view-website`
 
 ---
 
@@ -53,6 +54,7 @@ I am building a visualization of my browsing history to make interesting content
 - `README.md`: high-level project overview and quick start.
 - `README_development.md`: environment setup and workflows only.
 - `docs/`: deeper documentation (architecture decisions, historical specs, etc.).
+- `config/`: taxonomy (`categories.yaml`), domain blocklists, and related docs.
 - `raw-data/`: browser history exports (ignored except README).
 - `data/`: generated assets only (ignored except README).
 - `scripts/`: shell scripts and Python tooling.
@@ -170,6 +172,8 @@ categories:
     label: 'Python Programming'
 ```
 
+- Categories configuration lives in `config/categories.yaml`; keep primary tags at the top with `type: primary`, and omit `type` for secondary tags.
+
 ---
 
 ## 8. Python Tooling
@@ -178,6 +182,9 @@ categories:
 - Browser cache favicon extraction script.
 - Network favicon fallback with rate limiting and guardrails.
 - Scripts are idempotent, support `--dry-run` and `--limit`.
+- URL handling: only `http` and `https` URLs are processed. `file:` and `mailto:` entries are skipped silently. Any other protocol should emit a warning, skip that entry, and continue processing.
+- Domain blocklist: `config/domain-blocklist.yml` (gitignored) lists domain suffixes to skip during loaders/favicons runs. If the blocklist contains `foo.com`, skip both `foo.com` and any domains ending in `.foo.com`. To speed implementation, assume the suffix is always on a '.' boundary for the domain name so you can keep the blocklist as a Python `set()`
+- Favicon fetching: if a `<link rel="icon">` uses a data URL (e.g., `data:image/png;base64,...`), decode the base64 payload directly and store it with the derived MIME type (no network fetch required).
 
 ---
 

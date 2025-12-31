@@ -15,7 +15,7 @@ I am building a visualization of my browsing history to make some interesting co
 - Linting/formatting/testing:
   - ESLint (with TypeScript config) + Prettier.
   - Vitest for unit/component coverage; create representative UI tests.
-  - Python tooling formatted and linted with Ruff, type-checked with `pyright` and `mypy`
+- Python tooling formatted and linted with Ruff; type-checked with `pyright` and `mypy`.
   - Provide tests for both UI components and Python scripts.
 - Shell scripts manage development workflows.
 - Data cleaning and transformation tooling is written in Python 3.14, with typing, executed via the `uv` environment manager (assumed installed).
@@ -115,7 +115,7 @@ create table domains (
   check_timestamp TEXT,              -- UTC YYYY-MM-DD HH:MM:SS
   favicon_type TEXT,                 -- MIME type
   favicon_data BLOB,                 -- raw icon data
-  main_category TEXT,                -- primary category. Should be a value from the categories.yaml file can be NULL
+  main_category TEXT,                -- primary category. Should be a value from config/categories.yaml; can be NULL
 );
 ```
 
@@ -123,14 +123,14 @@ create table domains (
 
 ## 8. Categories
 
-This is a hand maintained list of categories stored in a categories.yaml file. This file is checked in to the repository
+This is a hand-maintained list of categories stored in config/categories.yaml. This file is checked in to the repository.
 
 The categories are used to classify websites by type
 
 ```
   - category:
     - tag: <hashtag for category id>
-    - label: Human Readable Name for display
+    - label: Human-readable name for display
     - type: primary
 
  - category
@@ -154,7 +154,7 @@ Primary
   ...
 ```
 
-Also come up with around 200 secondary categories based on the primary categories
+Also come up with around 200 secondary categories based on the primary categories.
 
 ```
 Secondary:
@@ -225,9 +225,10 @@ If a category does not have a 'type: primary' value, it's assumed to be secondar
 │   ├── load-edge.py
 │   ├── load-takeout.py
 │   └── find-favicons.py
-├── categories/
+├── config/
 │   ├── categories.yaml
-│   └── README.md      # explains taxonomy usage/updating
+│   ├── domain-blocklist.yml   # domains to skip (gitignored)
+│   └── README.md              # explains taxonomy usage/updating
 ├── docs/
 │   └── (architecture, spec history, etc.)
 └── .env-example
@@ -242,11 +243,11 @@ TODO:
 - [x] Create a script to initialize the sqlite database under data/
 - [x] Initialize Vite/TypeScript project with ESLint/Prettier/Vitest wired to the shell scripts
 - [x] Add git hooks (pre-commit) to enforce lint/format/type checks in .pre-commit-config.yaml using pre-commit tool (already installed)
-- [ ] Add Python project config (uv requirements/pyproject, Ruff/mypy/pyright settings)
-- [ ] Implement python scripts that do data loading + favicon workflow with tests
+- [x] Add Python project config (uv requirements/pyproject, Ruff/mypy/pyright settings)
+- [x] Implement python scripts that do data loading + favicon workflow with tests
 - [ ] Populate categories.yaml with the primary/secondary taxonomy
 - [ ] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
-- [ ] Document category mapping rules and data-processing workflow in docs/ and categories/README.md
+- [ ] Document category mapping rules and data-processing workflow in docs/ and config/README.md
 - [ ] Generate mock pages for palette and layout exploration with Client-side routing
 - [ ] Design the bubble heatmap and overlay interactions
 - [ ] Add Bubble heatmap landing view driven by level0.json

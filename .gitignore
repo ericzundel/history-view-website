@@ -112,3 +112,4 @@ __pycache__/
 .eggs/
 .mypy_cache/
 .pytest_cache/
+config/domain-blocklist.yml

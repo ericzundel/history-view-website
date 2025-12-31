@@ -16,7 +16,7 @@ Visualization of personal browsing history as a static single-page app with supp
 - `scripts/` dev/build/deploy helpers and Python loaders (`scripts/tests/` for Python tests)
 - `data/` generated DB/JSON/sprites (ignored except README)
 - `raw-data/` source exports (ignored except README)
-- `categories/` taxonomy definitions and docs
+- `config/` taxonomy definitions and blocklists
 - `docs/` deeper documentation (specs, ADRs, etc.)
 
 See `docs/SPEC_v1.md` for the current working specification and `README_development.md` for setup instructions.
