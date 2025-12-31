@@ -18,18 +18,21 @@ I am building a visualization of my browsing history to make interesting content
 ## 2. Technology & Development Environment
 
 ### Front-End
+
 - JavaScript / TypeScript using Vite.
 - Target Node.js 24, managed via `nvm`.
 - TypeScript must run in `strict` mode and follow established best practices.
 - Target modern evergreen browsers only.
 
 ### Linting, Formatting, and Testing
+
 - ESLint (TypeScript configuration).
 - Prettier.
 - Vitest for unit and component tests.
 - Representative UI tests must be included.
 
 ### Python Tooling
+
 - Python 3.14.
 - Environment managed with `uv` (assumed installed).
 - Formatting and linting: Ruff.
@@ -37,6 +40,7 @@ I am building a visualization of my browsing history to make interesting content
 - Tests required for Python scripts.
 
 ### Tooling & Automation
+
 - Shell scripts manage development, build, and deployment workflows.
 - Freely available libraries may be used (e.g., D3.js for visualization).
 - Git hooks enforce linting, formatting, and type-checking before commits.
@@ -61,6 +65,7 @@ I am building a visualization of my browsing history to make interesting content
 ## 4. Front-End Visualization Requirements
 
 ### Initial View
+
 - Full-page bubble heatmap inspired by:
   https://www.amcharts.com/demos/bubble-based-heat-map/
 - Y-axis: days of the week (Sunday–Saturday).
@@ -70,12 +75,14 @@ I am building a visualization of my browsing history to make interesting content
 - Click dims background to ~20% opacity and displays overlay.
 
 ### Animations
+
 - Initial load.
 - View switches.
 - Overlay appearance/disappearance.
 - Hover and click interactions.
 
 ### Primary Data Source: `level0.json`
+
 ```json
 {
   "day": 0,
@@ -86,6 +93,7 @@ I am building a visualization of my browsing history to make interesting content
 ```
 
 ### Overlay Drill-Down (`level1-<day>-<hour>.json`)
+
 ```json
 {
   "day": 0,
@@ -155,11 +163,11 @@ create index idx_visits_timestamp_domain on visits(timestamp, domain);
 
 ```yaml
 categories:
-  - tag: "#news"
-    label: "News"
-    type: "primary"
-  - tag: "#python"
-    label: "Python Programming"
+  - tag: '#news'
+    label: 'News'
+    type: 'primary'
+  - tag: '#python'
+    label: 'Python Programming'
 ```
 
 ---

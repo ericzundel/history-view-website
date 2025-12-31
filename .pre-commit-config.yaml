@@ -1,0 +1,85 @@
+default_stages:
+  - commit
+
+repos:
+  - repo: local
+    hooks:
+      - id: prevent-main-commit
+        name: Prevent direct commits to main
+        entry: bash
+        args:
+          - -c
+          - |
+            set -euo pipefail
+            branch="$(git rev-parse --abbrev-ref HEAD)"
+            git_dir="$(git rev-parse --git-dir)"
+            merge_head="${git_dir}/MERGE_HEAD"
+            if [[ "${branch}" != "main" ]]; then
+              exit 0
+            fi
+            if [[ -f "${merge_head}" ]]; then
+              exit 0
+            fi
+            if [[ -d "${git_dir}/rebase-merge" || -d "${git_dir}/rebase-apply" ]]; then
+              exit 0
+            fi
+            if [[ "${ALLOW_MAIN_HOTFIX:-0}" = "1" ]]; then
+              echo "⚠️  ALLOW_MAIN_HOTFIX=1 detected – bypassing main branch guard."
+              exit 0
+            fi
+            cat <<-'EOF' >&2
+                ❌ Direct commits to 'main' are blocked.
+
+                Please:
+                  1. Commit to a feature branch and open a PR, or
+                  2. For emergency hotfixes only, re-run with ALLOW_MAIN_HOTFIX=1 set (e.g. `ALLOW_MAIN_HOTFIX=1 git commit ...`)
+
+                If you are in the middle of a merge or rebase, the hook should auto-detect and allow it.
+            EOF
+            exit 1
+        language: system
+        pass_filenames: false
+        stages:
+          - commit
+
+      - id: format-prettier
+        name: Format with Prettier
+        entry: bash
+        args:
+          - -c
+          - |
+            set -euo pipefail
+            cd "$(git rev-parse --show-toplevel)"
+            npm run format:fix
+        language: system
+        pass_filenames: false
+        stages:
+          - commit
+
+      - id: lint-eslint
+        name: Lint TypeScript/React
+        entry: bash
+        args:
+          - -c
+          - |
+            set -euo pipefail
+            cd "$(git rev-parse --show-toplevel)"
+            npm run lint
+        language: system
+        pass_filenames: false
+        stages:
+          - commit
+
+      - id: typecheck-tsc
+        name: Type-check TypeScript
+        entry: bash
+        args:
+          - -c
+          - |
+            set -euo pipefail
+            cd "$(git rev-parse --show-toplevel)"
+            npm run typecheck
+        language: system
+        pass_filenames: false
+        stages:
+          - commit
