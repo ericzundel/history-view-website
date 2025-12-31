@@ -1,13 +1,15 @@
 # History View Website Specification Draft
 
-I am building a visualization of my browsing history to make some interesting content on my website.  I have some raw data from my browser and a download from Google Takeout. I'm going to assemble and curate this data and then publish it on my personal website.
+I am building a visualization of my browsing history to make some interesting content on my website. I have some raw data from my browser and a download from Google Takeout. I'm going to assemble and curate this data and then publish it on my personal website.
 
 ## 1. Project Overview
+
 - Build a single-page application (SPA) that can be hosted as static files without a dedicated server process. Static assets may be split across multiple files for download efficiency.
 - Provide companion tooling to gather, normalize, and persist browsing-history data into JSON and SVG assets. These scripts are executed manually during data-prep runs.
 - Primary goal is exploratory/interesting insights into browsing behavior rather than formal analytics; tone should be engaging but not silly/playful.
 
 ## 2. Technology & Development Environment
+
 - Front-end: JavaScript/TypeScript with Vite. Target Node.js 24 managed via `nvm`.
 - TypeScript must run in `strict` mode and follow widely accepted best practices.
 - Linting/formatting/testing:
@@ -22,6 +24,7 @@ I am building a visualization of my browsing history to make some interesting co
 - Git hooks enforce linting/formatting before commits (e.g., via Husky or simple `pre-commit` scripts).
 
 ## 3. Repository Structure & Supporting Files
+
 - License: Creative Commons BY-NC-SA.
 - `README.md`: project overview and quick start; deeper docs live elsewhere.
 - `README_development.md`
@@ -44,6 +47,7 @@ I am building a visualization of my browsing history to make some interesting co
 - Additional docs near the category data (see Section 8).
 
 ## 4. Front-End Visualization Requirements
+
 - Initial view: full-page bubble heatmap inspired by [AMCharts Bubble Heat Map](https://www.amcharts.com/demos/bubble-based-heat-map/).
   - Y-axis: days of the week (Sunday–Saturday).
   - X-axis: 24 columns labeled `00:00`–`23:00`.
@@ -64,6 +68,7 @@ I am building a visualization of my browsing history to make some interesting co
   "size": "88"         // linear scale 0..100, drives bubble size
 }
 ```
+
 - Color palette: subdued oranges/browns/reds; experiment by building ~12 color variations showcased on a dedicated mock page to review aesthetics before finalizing.
 
 - Overlay presents a drill-down treemap.
@@ -85,12 +90,14 @@ I am building a visualization of my browsing history to make some interesting co
 - Provide one favicon sprite per day/hour combination for use in the treemap overlay.
 
 ## 6. Raw Data Inputs
+
 - `raw-data/` initially contains any of the following JSON exports:
   1. `chrome-history-export-<date>.json`: array entries include fields such as `id`, `visitTime`, `title`, `url`, etc.
   2. `edge-history-export-<date>.json`: array entries with fields like `order`, `date`, `time`, `title`, `url`, etc.
   3. Google Takeout Chrome data (standard export format).
 
 ## 7. Database Schema
+
 - Load raw data into a SQLite database with tables:
 
 ```
@@ -111,6 +118,7 @@ create table domains (
   main_category TEXT,                -- primary category. Should be a value from the categories.yaml file can be NULL
 );
 ```
+
 - Ensure the schema supports long-term (all-time) history with efficient querying for time-of-day/day-of-week aggregations. Index `visits(domain, timestamp)` to support the heatmap queries. Avoid speculative columns; add only when a requirement demands it.
 
 ## 8. Categories
@@ -118,8 +126,9 @@ create table domains (
 This is a hand maintained list of categories stored in a categories.yaml file. This file is checked in to the repository
 
 The categories are used to classify websites by type
+
 ```
-  - category: 
+  - category:
     - tag: <hashtag for category id>
     - label: Human Readable Name for display
     - type: primary
@@ -127,24 +136,26 @@ The categories are used to classify websites by type
  - category
    - tag: <hashtag for category id>
    - label:
-   
- ``` 
 
- Please pre-populate this file with up to  40 different primary categories you might use to classify websites in general such as:
-
- ```
- Primary
-   #news  News
-   #social  Social Media
-   #games  Games
-   #office  Spreadsheets, Word Processors, etc
-   #productivity Productivity software
-   #messaging Email and Messaging
-   #software_dev Software Development
-   #entertainment  Entertainment
-   ...
 ```
+
+Please pre-populate this file with up to 40 different primary categories you might use to classify websites in general such as:
+
+```
+Primary
+  #news  News
+  #social  Social Media
+  #games  Games
+  #office  Spreadsheets, Word Processors, etc
+  #productivity Productivity software
+  #messaging Email and Messaging
+  #software_dev Software Development
+  #entertainment  Entertainment
+  ...
+```
+
 Also come up with around 200 secondary categories based on the primary categories
+
 ```
 Secondary:
   #java  Java Programming Languages
@@ -171,6 +182,7 @@ If a category does not have a 'type: primary' value, it's assumed to be secondar
 - Pre-populate with ~40 primary categories and ~200 secondary categories; expect future manual adjustments.
 
 ## 9. Python Tooling
+
 - Create separate loader scripts named `load-<datasource>.py`, each accepting a filename:
   - Extract the domain from each URL (e.g., `https://foo.com/path` → `foo.com`).
   - Normalize timestamps to `YYYY-MM-DD HH:MM:SS`.
@@ -187,11 +199,13 @@ If a category does not have a 'type: primary' value, it's assumed to be secondar
 - Loader scripts must be idempotent, support a `--dry-run` flag, provide an option to process only N entries (limit applies whether or not dry-run is active), and log human-readable progress/errors.
 
 ## 10. Deployment Expectations
+
 - Production build outputs stand-alone HTML/CSS/JS assets ready for static hosting.
 - Deployment script pushes the production build via `scp`/`ssh` to the InMotion hosting account’s `public_html` directory (credentials/port driven by `.env-example`). Host uses cPanel and Apache-style `.htaccess` (assume compatibility).
 - Provide separate scripts for development server launch, production build, and deployment (see Section 3).
 
 ## 11. Proposed Repository Layout (Draft)
+
 ```
 /
 ├── README.md
@@ -218,24 +232,25 @@ If a category does not have a 'type: primary' value, it's assumed to be secondar
 │   └── (architecture, spec history, etc.)
 └── .env-example
 ```
+
 - Open questions: Should `mocks/` live under `docs/` instead? Any need for additional top-level folders (e.g., `tests/` for integration scripts) beyond what Vite/Python structures already provide?
 
-
 TODO:
-  - [x] Create repository layout
-  - [x] Create scripts for developer workflow (dev/build/deploy stubs)
-  - [x] Create a script to initialize the sqlite database under data/
-  - [x] Initialize Vite/TypeScript project with ESLint/Prettier/Vitest wired to the shell scripts
-  - [ ] Add git hooks (Husky or pre-commit) to enforce lint/format/type checks
-  - [ ] Add Python project config (uv requirements/pyproject, Ruff/mypy/pyright settings) 
-  - [ ] Implement python scripts that do data loading + favicon workflow with tests
-  - [ ] Populate categories.yaml with the primary/secondary taxonomy
-  - [ ] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
-  - [ ] Document category mapping rules and data-processing workflow in docs/ and categories/README.md
-  - [ ] Generate mock pages  for palette and layout exploration with Client-side routing 
-  - [ ] Design the bubble heatmap and overlay interactions
-  - [ ] Add Bubble heatmap landing view driven by level0.json
-  - [ ] Add Animated treemap overlays with category drilldowns
-  - [ ] Wire data loaders to emit level0/level1 JSON + sprites
-  - [ ] Connect deployment script to publish static assets
-  - [ ] Add deployment `.htaccess`/routing and a minimal README section for hosting steps
+
+- [x] Create repository layout
+- [x] Create scripts for developer workflow (dev/build/deploy stubs)
+- [x] Create a script to initialize the sqlite database under data/
+- [x] Initialize Vite/TypeScript project with ESLint/Prettier/Vitest wired to the shell scripts
+- [x] Add git hooks (pre-commit) to enforce lint/format/type checks in .pre-commit-config.yaml using pre-commit tool (already installed)
+- [ ] Add Python project config (uv requirements/pyproject, Ruff/mypy/pyright settings)
+- [ ] Implement python scripts that do data loading + favicon workflow with tests
+- [ ] Populate categories.yaml with the primary/secondary taxonomy
+- [ ] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
+- [ ] Document category mapping rules and data-processing workflow in docs/ and categories/README.md
+- [ ] Generate mock pages for palette and layout exploration with Client-side routing
+- [ ] Design the bubble heatmap and overlay interactions
+- [ ] Add Bubble heatmap landing view driven by level0.json
+- [ ] Add Animated treemap overlays with category drilldowns
+- [ ] Wire data loaders to emit level0/level1 JSON + sprites
+- [ ] Connect deployment script to publish static assets
+- [ ] Add deployment `.htaccess`/routing and a minimal README section for hosting steps

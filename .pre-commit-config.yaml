@@ -1,0 +1,79 @@
+default_stages:
+  - commit
+
+repos:
+  - repo: local
+    hooks:
+      - id: prevent-main-commit
+        name: Prevent direct commits to main
+        entry: bash
+        args:
+          - -c
+          - |
+            set -euo pipefail
+            branch="$(git rev-parse --abbrev-ref HEAD)"
+            git_dir="$(git rev-parse --git-dir)"
+            merge_head="${git_dir}/MERGE_HEAD"
+            if [[ "${branch}" != "main" ]]; then
+              exit 0
+            fi
+            if [[ -f "${merge_head}" ]]; then
+              exit 0
+            fi
+            if [[ -d "${git_dir}/rebase-merge" || -d "${git_dir}/rebase-apply" ]]; then
+              exit 0
+            fi
+            if [[ "${ALLOW_MAIN_HOTFIX:-0}" = "1" ]]; then
+              echo "⚠️  ALLOW_MAIN_HOTFIX=1 detected – bypassing main branch guard."
+              exit 0
+            fi
+            cat <<-'EOF' >&2
+                ❌ Direct commits to 'main' are blocked.
+
+                Please:
+                  1. Commit to a feature branch and open a PR, or
+                  2. For emergency hotfixes only, re-run with ALLOW_MAIN_HOTFIX=1 set (e.g. `ALLOW_MAIN_HOTFIX=1 git commit ...`)
+
+                If you are in the middle of a merge or rebase, the hook should auto-detect and allow it.
+            EOF
+            exit 1
+        language: system
+        pass_filenames: false
+
+      - id: format-prettier
+        name: Format with Prettier
+        entry: npx prettier
+        args: ['--write']
+        language: system
+        files: "\\.(tsx?|jsx?|json|css|md|ya?ml)$"
+        types_or: [text]
+
+      - id: lint-eslint
+        name: Lint TypeScript/React
+        entry: npx eslint
+        args: ['--max-warnings=0']
+        language: system
+        files: "\\.(tsx?|ts|jsx?|mts|cts)$"
+
+      - id: typecheck-tsc
+        name: Type-check TypeScript
+        entry: bash
+        args:
+          - -c
+          - |
+            set -euo pipefail
+            if [ "$#" -eq 0 ]; then
+              exit 0
+            fi
+            npm run typecheck
+          - --
+        language: system
+        files: "\\.(tsx?|ts|mts|cts)$"
+
+      - id: test-vitest
+        name: Run Vitest suite
+        entry: npx vitest
+        args: ['run', '--passWithNoTests']
+        language: system
+        pass_filenames: false
+        files: "\\.(tsx?|ts|jsx?|mts|cts)$"

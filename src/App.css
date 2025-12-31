@@ -3,7 +3,12 @@
 }
 
 .app {
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
   color: #0f172a;
   background: radial-gradient(circle at 10% 10%, #ffe6c7, #fff);
   min-height: 100vh;
@@ -30,7 +35,9 @@
 
 .logo {
   height: 3rem;
-  transition: transform 150ms ease, filter 150ms ease;
+  transition:
+    transform 150ms ease,
+    filter 150ms ease;
 }
 
 .logo:hover {

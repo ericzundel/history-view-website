@@ -3,11 +3,13 @@
 Visualization of personal browsing history as a static single-page app with supporting data-prep tooling.
 
 ## What this is
+
 - Front-end: Vite + TypeScript (strict), delivering a bubble heatmap with drill-down treemap overlays.
 - Tooling: Python 3.14 with `uv`, SQLite-backed loaders, favicon harvesting, and JSON/sprite generation.
 - Everything deploys as static assets to shared hosting.
 
 ## Repo map (planned)
+
 - `src/` front-end SPA code
 - `public/` static assets and sprites
 - `mocks/` design explorations (palettes, layout prototypes)
