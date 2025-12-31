@@ -1,0 +1,2 @@
+- These python scripts are checked with `mypy` and `pyright`. Make sure that these checks run clean when you are making changes.
+- The scripts are formatted with `ruff` . Run `ruff format` to format files after making changes.

@@ -1,4 +1,4 @@
-# Category Taxonomy
+# Configuration: Categories and Domain Blocklist
 
 The category system classifies domains and visit data for drill-down views:
 
@@ -10,6 +10,18 @@ Workflow:
 1. Edit `categories.yaml` to add or adjust categories. Keep primary categories grouped at the top with `type: primary`; omit `type` for secondary tags.
 2. Keep tags as lowercase hashtags without spaces; use `label` for display text.
 3. Downstream scripts read this file to map domains to categories and to populate overlay data sets.
+
+Domain blocklist:
+
+- Create `domain-blocklist.yml` to list domains the loaders/favicons should skip.
+- File is gitignored by default (`config/domain-blocklist.yml`).
+- Use a flat YAML list of domains, e.g.:
+
+```yaml
+- example.com
+- internal.lan
+- 10.0.0.5
+```
 
 Future work (per spec):
 
