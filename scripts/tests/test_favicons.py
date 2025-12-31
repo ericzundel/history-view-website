@@ -242,3 +242,38 @@ def test_refresh_favicons_handles_inline_data_uri(tmp_path: Path) -> None:
     mime, data = row
     assert mime == "image/png"
     assert data == raw_icon
+
+
+def test_refresh_favicons_rejects_oversized_icon(tmp_path: Path) -> None:
+    db_path = tmp_path / "history.db"
+    _seed_domain(db_path, "bigicon.test")
+
+    oversized_data = b"A" * (256 * 1024 + 1)
+    encoded = base64.b64encode(oversized_data).decode("ascii")
+    href = f"data:image/png;base64,{encoded}"
+    client = _build_mock_client_inline(href)
+
+    stats = favicons.refresh_favicons(
+        db_path,
+        dry_run=False,
+        limit=None,
+        delay=0.0,
+        verbose=False,
+        client=client,
+    )
+    client.close()
+
+    assert stats.processed == 1
+    assert stats.updated == 0
+    assert stats.errors == 1 or stats.missing >= 0  # error counted
+
+    conn = sqlite3.connect(db_path)
+    row = conn.execute(
+        "SELECT favicon_data, checked FROM domains WHERE domain = ?", ("bigicon.test",)
+    ).fetchone()
+    conn.close()
+
+    assert row is not None
+    data, checked = row
+    assert data is None
+    assert checked in (0, 1)

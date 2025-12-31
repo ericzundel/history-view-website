@@ -21,6 +21,7 @@ from lib.history_db import (
 )
 
 USER_AGENT = "history-view-favicon-fetcher/0.1"
+MAX_ICON_BYTES = 256 * 1024
 
 
 @dataclass
@@ -106,7 +107,10 @@ def _select_icon(soup: BeautifulSoup, base_url: str) -> tuple[str, str | None]:
 def _fetch_icon(client: httpx.Client, url: str, type_hint: str | None) -> tuple[bytes, str | None]:
     inline = _decode_inline_icon(url, type_hint)
     if inline is not None:
-        return inline
+        data, mime = inline
+        if len(data) > MAX_ICON_BYTES:
+            raise httpx.HTTPError(f"Inline icon exceeds size limit ({len(data)} bytes)")
+        return data, mime
 
     response = client.get(url)
     response.raise_for_status()
@@ -114,7 +118,10 @@ def _fetch_icon(client: httpx.Client, url: str, type_hint: str | None) -> tuple[
     content_type = response.headers.get("content-type")
     if content_type:
         mime = content_type.split(";")[0].strip()
-    return response.content, mime
+    content = response.content
+    if len(content) > MAX_ICON_BYTES:
+        raise httpx.HTTPError(f"Icon exceeds size limit ({len(content)} bytes)")
+    return content, mime
 
 
 def _decode_inline_icon(url: str, type_hint: str | None) -> tuple[bytes, str | None] | None:
