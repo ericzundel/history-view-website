@@ -40,12 +40,21 @@ class FaviconStats:
     errors: int = 0
 
 
-def _pending_domains(conn: sqlite3.Connection, limit: int | None) -> list[tuple[str, str | None]]:
+def _pending_domains(
+    conn: sqlite3.Connection, limit: int | None, *, ignore_checked: bool
+) -> list[tuple[str, str | None]]:
+    where_clause = (
+        "checked = 0 OR checked IS NULL OR favicon_data IS NULL"
+        if ignore_checked
+        else "checked = 0 OR checked IS NULL"
+    )
     cursor = conn.execute(
         """
         SELECT domain, title
         FROM domains
-        WHERE checked = 0 OR checked IS NULL OR favicon_data IS NULL
+        WHERE """
+        + where_clause
+        + """
         ORDER BY domain
         """
         + (" LIMIT ?" if limit is not None else ""),
@@ -161,11 +170,7 @@ def _process_domain(client: httpx.Client, domain: str) -> FaviconResult:
 
     data: bytes | None = None
     mime: str | None = icon_type
-    try:
-        data, mime = _fetch_icon(client, icon_url, icon_type)
-    except httpx.HTTPError as exc:
-        print(f"[error] {domain}: favicon fetch failed - {exc}")
-        data = None
+    data, mime = _fetch_icon(client, icon_url, icon_type)
 
     return FaviconResult(domain=domain, title=page_title, mime_type=mime, data=data)
 
@@ -220,6 +225,7 @@ def refresh_favicons(
     quiet: bool = False,
     blocklist: set[str] | None = None,
     client: httpx.Client | None = None,
+    ignore_checked: bool = False,
 ) -> FaviconStats:
     stats = FaviconStats()
     conn = open_connection(db_path, dry_run)
@@ -231,7 +237,7 @@ def refresh_favicons(
         close_client = True
 
     try:
-        pending = _pending_domains(conn, limit)
+        pending = _pending_domains(conn, limit, ignore_checked=ignore_checked)
         for idx, (domain, _) in enumerate(pending, start=1):
             stats.processed += 1
             if not quiet and stats.processed % 10 == 0:
@@ -249,7 +255,23 @@ def refresh_favicons(
                 _mark_checked(conn, domain, dry_run=dry_run)
                 continue
             try:
-                result = _process_domain(client, domain)
+                result: FaviconResult | None = None
+                for attempt in range(3):
+                    try:
+                        result = _process_domain(client, domain)
+                        break
+                    except httpx.TimeoutException as exc:
+                        if attempt < 2:
+                            if verbose:
+                                print(f"[retry] {domain}: timeout ({attempt + 1}/3), retrying...")
+                            continue
+                        stats.errors += 1
+                        if verbose:
+                            print(f"[timeout] {domain}: {exc}, marking checked")
+                        _mark_checked(conn, domain, dry_run=dry_run)
+                        raise
+                if result is None:
+                    continue
             except httpx.HTTPStatusError as exc:
                 status = exc.response.status_code
                 if 400 <= status < 500:
@@ -334,6 +356,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Path to domain blocklist YAML (default: config/domain-blocklist.yml).",
     )
+    parser.add_argument(
+        "--ignore-checked",
+        action="store_true",
+        help="Process entries even if checked is already set to 1.",
+    )
     return parser
 
 
@@ -348,6 +375,7 @@ def main() -> None:
         verbose=args.verbose,
         quiet=args.quiet,
         blocklist=load_blocklist(args.blocklist),
+        ignore_checked=args.ignore_checked,
     )
     print(
         f"{'Dry-run' if args.dry_run else 'Updated'}: processed {stats.processed}, "
