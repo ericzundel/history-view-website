@@ -77,3 +77,49 @@ repos:
         language: system
         pass_filenames: false
         files: "\\.(tsx?|ts|jsx?|mts|cts)$"
+
+      - id: format-ruff
+        name: Format Python with Ruff
+        entry: uv
+        args: ['run', 'ruff', 'format']
+        language: system
+        files: "\\.py$"
+
+      - id: lint-ruff
+        name: Lint Python with Ruff
+        entry: uv
+        args: ['run', 'ruff', 'check', '--force-exclude']
+        language: system
+        files: "\\.py$"
+
+      - id: typecheck-mypy
+        name: Type-check Python (mypy)
+        entry: uv
+        args:
+          - run
+          - mypy
+          - scripts
+        language: system
+        pass_filenames: false
+        files: "\\.py$"
+
+      - id: typecheck-pyright
+        name: Type-check Python (pyright)
+        entry: uv
+        args:
+          - run
+          - pyright
+        language: system
+        pass_filenames: false
+        files: "\\.py$"
+
+      - id: test-pytest
+        name: Run Python pytest suite
+        entry: uv
+        args:
+          - run
+          - pytest
+          - scripts/tests
+        language: system
+        pass_filenames: false
+        files: "\\.py$"

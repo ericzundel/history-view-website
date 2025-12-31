@@ -12,10 +12,13 @@
 
 - Requires Python 3.14 managed by `uv` (assumed installed).
 - Create venv: `uv venv --python 3.14` then `source .venv/bin/activate`.
-- Install deps (placeholder): `uv pip install -r requirements.txt` (file to be added).
+- Install deps from lockfile: `uv pip install -r requirements_lock.txt` (includes runtime + dev tooling). If you change requirements, regenerate the lock with `scripts/update-requirements.sh` (runs `uv pip compile requirements.txt > requirements_lock.txt`).
+- Format/lint/type-check: `uv run ruff format .`, `uv run ruff check .`, `uv run mypy scripts`, `uv run pyright`.
+- Tests: `uv run pytest scripts/tests`.
 - Data loaders live in `scripts/` (`load-chrome.py`, `load-edge.py`, `load-takeout.py`) with tests in `scripts/tests/`.
 - Favicon enrichment: `scripts/find-favicons.py`.
-- Run format/lint/type checks: Ruff, mypy, pyright (scripts to be added).
+- Tooling configuration is centralized in `pyproject.toml` (Ruff/mypy/pyright).
+- Type checkers target Python 3.12 features for now (tooling support), while runtime remains Python 3.14.
 
 ## Environment
 
@@ -27,7 +30,7 @@
 - Install `pre-commit` if missing (e.g., `uv tool install pre-commit` or `uvx pre-commit --version`).
 - Enable hooks: `pre-commit install`.
 - Hooks block direct commits to `main` (override with `ALLOW_MAIN_HOTFIX=1` for emergency commits).
-- Formatting/linting/type-checking run only when matching files are staged (Prettier for text assets, ESLint for JS/TS, `npm run typecheck` when TS files change). Vitest runs on JS/TS changes.
+- Formatting/linting/type-checking run only when matching files are staged (Prettier for text assets, ESLint for JS/TS, `npm run typecheck` when TS files change). Vitest runs on JS/TS changes. Python changes trigger Ruff format/lint, mypy, pyright, and pytest.
 - Update hook versions: `npm run hooks:update` (or `pre-commit autoupdate`).
 - Rare emergencies only: bypass hooks with `git commit --no-verify` (avoid for normal work).
 
