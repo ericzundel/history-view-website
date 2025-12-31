@@ -57,6 +57,7 @@ class LoaderStats:
 def resolve_db_path(db_arg: Path | None) -> Path:
     script_dir = Path(__file__).resolve().parent
     repo_root = script_dir.parent.parent
+    print(f"repo root is {repo_root}")
     default_path = repo_root / "data" / "history.db"
     return db_arg if db_arg is not None else default_path
 

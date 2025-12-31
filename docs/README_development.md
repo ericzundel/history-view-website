@@ -18,7 +18,7 @@
 - Data loaders live in `scripts/` (`load-chrome.py`, `load-edge.py`, `load-takeout.py`) with tests in `scripts/tests/`.
 - Favicon enrichment: `scripts/find-favicons.py`.
 - Tooling configuration is centralized in `pyproject.toml` (Ruff/mypy/pyright).
-- Type checkers target Python 3.12 features for now (tooling support), while runtime remains Python 3.14.
+- Tools should target Python 3.14.
 
 ## Environment
 

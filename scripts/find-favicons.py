@@ -156,7 +156,8 @@ def _process_domain(client: httpx.Client, domain: str) -> FaviconResult:
     mime: str | None = icon_type
     try:
         data, mime = _fetch_icon(client, icon_url, icon_type)
-    except httpx.HTTPError:
+    except httpx.HTTPError as exc:
+        print(f"[error] {domain}: favicon fetch failed - {exc}")
         data = None
 
     return FaviconResult(domain=domain, title=page_title, mime_type=mime, data=data)

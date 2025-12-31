@@ -3,6 +3,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
+import pytest
 from lib.history_db import (
     SCHEMA,
     LoaderStats,
@@ -11,6 +12,7 @@ from lib.history_db import (
     is_ip_or_local,
     normalize_timestamp,
     process_records,
+    resolve_db_path,
     should_skip_blocklisted,
     should_skip_url,
 )
@@ -123,3 +125,21 @@ def test_should_skip_blocklisted_helper() -> None:
     assert should_skip_blocklisted("sub.blocked.com", blocklist)
     assert not should_skip_blocklisted("other.com", blocklist)
     assert not should_skip_blocklisted("blocked.com", None)
+
+
+def test_resolve_db_path_defaults_to_data_dir(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fake_script_dir = tmp_path / "scripts" / "lib"
+    fake_script_dir.mkdir(parents=True)
+
+    def fake_resolve(_self: Path, strict: bool = False) -> Path:  # noqa: ARG001
+        return fake_script_dir / "history_db.py"
+
+    monkeypatch.setattr("lib.history_db.Path.resolve", fake_resolve)
+
+    resolved = resolve_db_path(None)
+    assert resolved == tmp_path / "data" / "history.db"
+
+    custom = resolve_db_path(tmp_path / "custom.db")
+    assert custom == tmp_path / "custom.db"
