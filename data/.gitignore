@@ -1,0 +1,4 @@
+# Ignore everything in data except this README and .gitignore
+*
+!.gitignore
+!README.md

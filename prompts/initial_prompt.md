@@ -219,3 +219,16 @@ If a category does not have a 'type: primary' value, it's assumed to be secondar
 └── .env-example
 ```
 - Open questions: Should `mocks/` live under `docs/` instead? Any need for additional top-level folders (e.g., `tests/` for integration scripts) beyond what Vite/Python structures already provide?
+
+
+TODO:
+  - [x] Create repository layout
+  - [x] Create scripts for developer workflow (dev/build/deploy stubs)
+  - [x] Create a script to initialize the sqlite database under data/
+  - [ ] Initialize Vite/TypeScript project with ESLint/Prettier/Vitest wired to the shell scripts
+  - [ ] Add Python project config (uv requirements/pyproject, Ruff/mypy/pyright settings) and implement loaders + favicon workflow with tests
+  - [ ] Populate categories.yaml with the primary/secondary taxonomy
+  - [ ] Add git hooks (Husky or pre-commit) to enforce lint/format/type checks
+  - [ ] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
+  - [ ] Document category mapping rules and data-processing workflow in docs/ and categories/README.md
+  - [ ] Add deployment `.htaccess`/routing and a minimal README section for hosting steps
