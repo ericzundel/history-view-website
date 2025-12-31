@@ -265,7 +265,7 @@ def test_refresh_favicons_rejects_oversized_icon(tmp_path: Path) -> None:
 
     assert stats.processed == 1
     assert stats.updated == 0
-    assert stats.errors == 1 or stats.missing >= 0  # error counted
+    assert stats.errors == 1  # error counted
 
     conn = sqlite3.connect(db_path)
     row = conn.execute(

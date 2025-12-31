@@ -6,5 +6,5 @@ Ideas for future improvements
 - Can Google or Apple's GPRS export format tell us about activity on the phone? That would be cool!
 - Different types of visualizations.
 - Add async favicon fetching for better performance
-- More feeback on progress with fetch-favicons.sh
-  Document architectural decisions
+- More feedback on progress with fetch-favicons.sh
+- Document architectural decisions
