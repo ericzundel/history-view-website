@@ -248,6 +248,7 @@ TODO:
 - [x] Implement python scripts that do data loading + favicon workflow with tests
 - [ ] Populate categories.yaml with the primary/secondary taxonomy
 - [ ] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
+- [ ] Add a github workflow that runs the logic in pre-commit hooks (check formatting, types, runs tests for node and python)
 - [ ] Document category mapping rules and data-processing workflow in docs/ and config/README.md
 - [ ] Generate mock pages for palette and layout exploration with Client-side routing
 - [ ] Design the bubble heatmap and overlay interactions
