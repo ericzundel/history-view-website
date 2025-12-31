@@ -17,11 +17,13 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS visits (
   id INTEGER PRIMARY KEY,
   domain TEXT NOT NULL,
-  timestamp TEXT NOT NULL
+  timestamp TEXT NOT NULL,
+  FOREIGN KEY(domain) REFERENCES domains(domain) ON DELETE CASCADE
 );
 
 CREATE INDEX IF NOT EXISTS idx_visits_domain_timestamp ON visits(domain, timestamp);
 CREATE INDEX IF NOT EXISTS idx_visits_timestamp_domain ON visits(timestamp, domain);
+CREATE INDEX IF NOT EXISTS idx_visits_domain ON visits(domain);
 
 CREATE TABLE IF NOT EXISTS domains (
   domain TEXT PRIMARY KEY,
@@ -35,9 +37,10 @@ CREATE TABLE IF NOT EXISTS domains (
 );
 
 CREATE TABLE IF NOT EXISTS secondary_categories (
-  id INTEGER PRIMARY KEY,
   domain TEXT NOT NULL,
-  tag TEXT NOT NULL
+  tag TEXT NOT NULL,
+  PRIMARY KEY (domain, tag),
+  FOREIGN KEY(domain) REFERENCES domains(domain) ON DELETE CASCADE
 );
 
 """.strip()
