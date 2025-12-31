@@ -20,6 +20,9 @@ CREATE TABLE IF NOT EXISTS visits (
   timestamp TEXT NOT NULL
 );
 
+CREATE INDEX IF NOT EXISTS idx_visits_domain_timestamp ON visits(domain, timestamp);
+CREATE INDEX IF NOT EXISTS idx_visits_timestamp_domain ON visits(timestamp, domain);
+
 CREATE TABLE IF NOT EXISTS domains (
   domain TEXT PRIMARY KEY,
   title TEXT,
@@ -31,8 +34,12 @@ CREATE TABLE IF NOT EXISTS domains (
   main_category TEXT
 );
 
-CREATE INDEX IF NOT EXISTS idx_visits_domain_timestamp ON visits(domain, timestamp);
-CREATE INDEX IF NOT EXISTS idx_visits_timestamp_domain ON visits(timestamp, domain);
+CREATE TABLE IF NOT EXISTS secondary_categories (
+  id INTEGER PRIMARY KEY,
+  domain TEXT NOT NULL,
+  tag TEXT NOT NULL
+);
+
 """.strip()
 
 LOCAL_DEVELOPMENT = "LOCAL_DEVELOPMENT"

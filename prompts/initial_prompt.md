@@ -180,6 +180,7 @@ If a category does not have a 'type: primary' value, it's assumed to be secondar
 
 - Please include documentation about this in a README file somewhere close to the category file.
 - Pre-populate with ~40 primary categories and ~200 secondary categories; expect future manual adjustments.
+- Add a companion domain-category map in `config/domain-category-map.yaml` that assigns each domain a single primary tag and zero or more secondary tags (using the same tag/label terminology as `categories.yaml`). This file is checked in and maintained by hand to override or supplement automated classification.
 
 ## 9. Python Tooling
 

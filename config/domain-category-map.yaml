@@ -1,0 +1,7 @@
+# Domain-to-category mappings.
+# Each entry maps a domain to one primary tag and optional secondary tags using tags from categories.yaml.
+domains:
+  # - domain: example.com
+  #   primary: "#news"
+  #   secondary:
+  #     - "#tech_news"
