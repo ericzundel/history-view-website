@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  UV_PROJECT_ENVIRONMENT: .venv
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Set up Python and uv
+        uses: astral-sh/setup-uv@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: |
+          uv self update
+          uv python install 3.14
+          uv venv --python 3.14
+          uv pip install -r requrements_lock.txt
+          uv sync --locked --extra dev
+
+      - name: Check formatting (Prettier)
+        run: npm run format
+
+      - name: Lint TypeScript/React (ESLint)
+        run: npm run lint
+
+      - name: Type-check TypeScript
+        run: npm run typecheck
+
+      - name: Run Vitest suite
+        run: npx vitest run --passWithNoTests
+
+      - name: Check Python formatting (Ruff)
+        run: uv run ruff format --check
+
+      - name: Lint Python (Ruff)
+        run: uv run ruff check --force-exclude
+
+      - name: Type-check Python (mypy)
+        run: uv run mypy scripts
+
+      - name: Type-check Python (pyright)
+        run: uv run pyright
+
+      - name: Run pytest
+        run: uv run pytest scripts/tests

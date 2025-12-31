@@ -123,3 +123,9 @@ repos:
         language: system
         pass_filenames: false
         files: "\\.py$"
+
+      - id: actionlint
+        name: Check github workflow actions
+        language: system
+        pass_filenames: false
+        entry: actionlint

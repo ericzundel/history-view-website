@@ -246,7 +246,7 @@ TODO:
 - [x] Add git hooks (pre-commit) to enforce lint/format/type checks in .pre-commit-config.yaml using pre-commit tool (already installed)
 - [x] Add Python project config (uv requirements/pyproject, Ruff/mypy/pyright settings)
 - [x] Implement python scripts that do data loading + favicon workflow with tests
-- [ ] Populate categories.yaml with the primary/secondary taxonomy
+- [x ] Populate categories.yaml with the primary/secondary taxonomy
 - [ ] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
 - [ ] Add a github workflow that runs the logic in pre-commit hooks (check formatting, types, runs tests for node and python)
 - [ ] Document category mapping rules and data-processing workflow in docs/ and config/README.md
