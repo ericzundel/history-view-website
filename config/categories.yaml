@@ -1,3 +1,633 @@
 # Category definitions for browsing history classification.
-# TODO: Populate with ~40 primary categories (include `type: primary`) followed by ~200 secondary categories.
-categories: []
+# Primary categories appear first with `type: primary`. Secondary categories omit `type`.
+categories:
+  # Primary categories
+  - tag: 'news'
+    label: News
+    type: primary
+  - tag: 'social'
+    label: Social Media
+    type: primary
+  - tag: 'searchdiscovery'
+    label: Search & Discovery
+    type: primary
+  - tag: 'softwaredev'
+    label: Software Development
+    type: primary
+  - tag: 'dataai'
+    label: Data & AI
+    type: primary
+  - tag: 'designcreative'
+    label: Design & Creative
+    type: primary
+  - tag: 'productivity'
+    label: Productivity & Organization
+    type: primary
+  - tag: 'messagingchat'
+    label: Messaging & Chat
+    type: primary
+  - tag: 'emailcalendar'
+    label: Email & Calendar
+    type: primary
+  - tag: 'commerceshopping'
+    label: Commerce & Shopping
+    type: primary
+  - tag: 'financepersonal'
+    label: Personal Finance
+    type: primary
+  - tag: 'bankingpayments'
+    label: Banking & Payments
+    type: primary
+  - tag: 'investingwealth'
+    label: Investing & Wealth
+    type: primary
+  - tag: 'insurance'
+    label: Insurance
+    type: primary
+  - tag: 'healthmedical'
+    label: Health & Medical
+    type: primary
+  - tag: 'fitnesswellness'
+    label: Fitness & Wellness
+    type: primary
+  - tag: 'foodcooking'
+    label: Food & Cooking
+    type: primary
+  - tag: 'travel'
+    label: Travel
+    type: primary
+  - tag: 'transportationmobility'
+    label: Transportation & Mobility
+    type: primary
+  - tag: 'governmentservices'
+    label: Government Services
+    type: primary
+  - tag: 'politicscivics'
+    label: Politics & Civics
+    type: primary
+  - tag: 'legal'
+    label: Legal
+    type: primary
+  - tag: 'educationlearning'
+    label: Education & Learning
+    type: primary
+  - tag: 'researchacademic'
+    label: Research & Academia
+    type: primary
+  - tag: 'scienceengineering'
+    label: Science & Engineering
+    type: primary
+  - tag: 'hardwaregadgets'
+    label: Hardware & Gadgets
+    type: primary
+  - tag: 'gaming'
+    label: Gaming
+    type: primary
+  - tag: 'entertainmentvideo'
+    label: Entertainment & Video
+    type: primary
+  - tag: 'musicaudio'
+    label: Music & Audio
+    type: primary
+  - tag: 'photosmediacreation'
+    label: Photos & Media Creation
+    type: primary
+  - tag: 'sports'
+    label: Sports
+    type: primary
+  - tag: 'homegarden'
+    label: Home & Garden
+    type: primary
+  - tag: 'realestate'
+    label: Real Estate
+    type: primary
+  - tag: 'careerjobs'
+    label: Careers & Jobs
+    type: primary
+  - tag: 'businessops'
+    label: Business Operations
+    type: primary
+  - tag: 'nonprofitphilanthropy'
+    label: Nonprofit & Philanthropy
+    type: primary
+  - tag: 'religionspirituality'
+    label: Religion & Spirituality
+    type: primary
+  - tag: 'parentingfamily'
+    label: Parenting & Family
+    type: primary
+  - tag: 'petsanimals'
+    label: Pets & Animals
+    type: primary
+  - tag: 'securityprivacy'
+    label: Security & Privacy
+    type: primary
+
+  # Secondary categories
+  # News
+  - tag: 'worldnews'
+    label: World News
+  - tag: 'localnews'
+    label: Local News
+  - tag: 'investigativenews'
+    label: Investigative News
+  - tag: 'technews'
+    label: Technology News
+  - tag: 'financenews'
+    label: Finance & Markets News
+
+  # Social
+  - tag: 'microblogging'
+    label: Microblogging
+  - tag: 'forums'
+    label: Forums & Message Boards
+  - tag: 'photosharing'
+    label: Photo Sharing
+  - tag: 'professionalnetworking'
+    label: Professional Networking
+  - tag: 'communitygroups'
+    label: Community Groups
+
+  # Search & Discovery
+  - tag: 'websearch'
+    label: Web Search
+  - tag: 'shoppingsearch'
+    label: Shopping Search
+  - tag: 'academicsearch'
+    label: Academic Search
+  - tag: 'verticalsearch'
+    label: Vertical/Domain-Specific Search
+
+  # Software Development
+  - tag: 'webdev'
+    label: Web Development
+  - tag: 'backenddev'
+    label: Backend Development
+  - tag: 'frontenddev'
+    label: Frontend Development
+  - tag: 'mobiledev'
+    label: Mobile Development
+  - tag: 'devtools'
+    label: Developer Tools
+  - tag: 'versioncontrol'
+    label: Version Control
+  - tag: 'apisintegrations'
+    label: APIs & Integrations
+  - tag: 'python'
+    label: Python
+  - tag: 'javascript'
+    label: JavaScript
+  - tag: 'java'
+    label: Java
+  - tag: 'csharp'
+    label: C#
+  - tag: 'cpp'
+    label: C++
+  - tag: 'php'
+    label: PHP
+  - tag: 'typescript'
+    label: TypeScript
+  - tag: 'ruby'
+    label: Ruby
+  - tag: 'go'
+    label: Go
+  - tag: 'swift'
+    label: Swift
+  - tag: 'kotlin'
+    label: Kotlin
+  - tag: 'rust'
+    label: Rust
+
+  # Data & AI
+  - tag: 'mlplatforms'
+    label: ML Platforms
+  - tag: 'datascience'
+    label: Data Science
+  - tag: 'datavisualization'
+    label: Data Visualization
+  - tag: 'dataengineering'
+    label: Data Engineering
+  - tag: 'databases'
+    label: Databases
+  - tag: 'generativeai'
+    label: Generative AI
+
+  # Design & Creative
+  - tag: 'uidesign'
+    label: UI Design
+  - tag: 'uxresearch'
+    label: UX Research
+  - tag: 'illustration'
+    label: Illustration
+  - tag: '3ddesign'
+    label: 3D Design
+  - tag: 'photoediting'
+    label: Photo Editing
+
+  # Productivity & Organization
+  - tag: 'taskmanagement'
+    label: Task Management
+  - tag: 'notetaking'
+    label: Note Taking
+  - tag: 'projectmanagement'
+    label: Project Management
+  - tag: 'timetracking'
+    label: Time Tracking
+  - tag: 'personalknowledge'
+    label: Personal Knowledge Bases
+
+  # Messaging & Chat
+  - tag: 'sms'
+    label: SMS
+  - tag: 'instantmessaging'
+    label: Instant Messaging
+  - tag: 'groupchat'
+    label: Group Chat
+  - tag: 'workplacechat'
+    label: Workplace Chat
+  - tag: 'videocalls'
+    label: Video Calls
+
+  # Email & Calendar
+  - tag: 'webmail'
+    label: Webmail
+  - tag: 'calendar'
+    label: Calendars
+  - tag: 'contacts'
+    label: Contacts
+  - tag: 'emailmarketing'
+    label: Email Marketing
+
+  # Commerce & Shopping
+  - tag: 'marketplaces'
+    label: Marketplaces
+  - tag: 'brandstores'
+    label: Brand Stores
+  - tag: 'pricecomparison'
+    label: Price Comparison
+  - tag: 'couponsdeals'
+    label: Coupons & Deals
+  - tag: 'fooddelivery'
+    label: Food Delivery
+  - tag: 'groceries'
+    label: Groceries & Household
+
+  # Personal Finance
+  - tag: 'budgeting'
+    label: Budgeting
+  - tag: 'creditmonitoring'
+    label: Credit Monitoring
+  - tag: 'taxprep'
+    label: Tax Preparation
+  - tag: 'loans'
+    label: Loans & Lending
+  - tag: 'financialplanning'
+    label: Financial Planning
+
+  # Banking & Payments
+  - tag: 'onlinebanking'
+    label: Online Banking
+  - tag: 'digitalwallets'
+    label: Digital Wallets
+  - tag: 'billpayments'
+    label: Bill Payments
+  - tag: 'peerpayments'
+    label: Peer-to-Peer Payments
+
+  # Investing & Wealth
+  - tag: 'brokerages'
+    label: Brokerages
+  - tag: 'roboadvisors'
+    label: Robo-Advisors
+  - tag: 'cryptoexchanges'
+    label: Crypto Exchanges
+  - tag: 'portfoliotrackers'
+    label: Portfolio Trackers
+  - tag: 'researchreports'
+    label: Investment Research
+  - tag: 'optionstrading'
+    label: Options Trading
+
+  # Insurance
+  - tag: 'healthinsurance'
+    label: Health Insurance
+  - tag: 'autoinsurance'
+    label: Auto Insurance
+  - tag: 'homeinsurance'
+    label: Home Insurance
+  - tag: 'lifeinsurance'
+    label: Life Insurance
+
+  # Health & Medical
+  - tag: 'medicalinfo'
+    label: Medical Information
+  - tag: 'telehealth'
+    label: Telehealth
+  - tag: 'pharmacies'
+    label: Pharmacies
+  - tag: 'patientportals'
+    label: Patient Portals
+  - tag: 'mentalhealth'
+    label: Mental Health
+  - tag: 'medicalresearch'
+    label: Medical Research
+
+  # Fitness & Wellness
+  - tag: 'workouts'
+    label: Workouts & Training
+  - tag: 'activitytracking'
+    label: Activity Tracking
+  - tag: 'mindfulness'
+    label: Mindfulness
+  - tag: 'sleep'
+    label: Sleep & Recovery
+  - tag: 'diets'
+    label: Diets & Nutrition Plans
+
+  # Food & Cooking
+  - tag: 'recipes'
+    label: Recipes
+  - tag: 'restaurants'
+    label: Restaurants
+  - tag: 'mealplanning'
+    label: Meal Planning
+  - tag: 'kitchentools'
+    label: Kitchen Tools
+  - tag: 'beverages'
+    label: Beverages & Coffee
+
+  # Travel
+  - tag: 'flights'
+    label: Flights
+  - tag: 'hotels'
+    label: Hotels
+  - tag: 'vacationrentals'
+    label: Vacation Rentals
+  - tag: 'travelplanning'
+    label: Travel Planning
+  - tag: 'travelguides'
+    label: Travel Guides
+
+  # Transportation & Mobility
+  - tag: 'rideshare'
+    label: Rideshare
+  - tag: 'publictransit'
+    label: Public Transit
+  - tag: 'micromobility'
+    label: Micromobility
+  - tag: 'automotiveinfo'
+    label: Automotive Info
+  - tag: 'navigation'
+    label: Navigation & Maps
+
+  # Government Services
+  - tag: 'cityservices'
+    label: City Services
+  - tag: 'permits'
+    label: Permits & Licensing
+  - tag: 'taxesfees'
+    label: Taxes & Fees
+  - tag: 'publicrecords'
+    label: Public Records
+  - tag: 'publicsafety'
+    label: Public Safety
+
+  # Politics & Civics
+  - tag: 'campaigns'
+    label: Campaigns & Candidates
+  - tag: 'votinginfo'
+    label: Voting Information
+  - tag: 'civicorgs'
+    label: Civic Organizations
+  - tag: 'policyanalysis'
+    label: Policy Analysis
+  - tag: 'activism'
+    label: Activism & Advocacy
+
+  # Legal
+  - tag: 'legalresearch'
+    label: Legal Research
+  - tag: 'contracts'
+    label: Contracts & Templates
+  - tag: 'compliance'
+    label: Compliance
+  - tag: 'iplaw'
+    label: IP Law
+  - tag: 'legalservices'
+    label: Legal Services
+
+  # Education & Learning
+  - tag: 'onlinecourses'
+    label: Online Courses
+  - tag: 'k12resources'
+    label: K-12 Resources
+  - tag: 'collegeinfo'
+    label: College Information
+  - tag: 'languagelearning'
+    label: Language Learning
+  - tag: 'studytools'
+    label: Study Tools
+  - tag: 'testprep'
+    label: Test Prep
+  - tag: 'certificationprograms'
+    label: Certification Programs
+
+  # Research & Academia
+  - tag: 'journals'
+    label: Academic Journals
+  - tag: 'preprints'
+    label: Preprints
+  - tag: 'datasetsrepos'
+    label: Datasets & Repos
+  - tag: 'academicprofiles'
+    label: Academic Profiles
+  - tag: 'citationstools'
+    label: Citation Tools
+
+  # Science & Engineering
+  - tag: 'spacescience'
+    label: Space Science
+  - tag: 'physics'
+    label: Physics
+  - tag: 'chemistry'
+    label: Chemistry
+  - tag: 'biology'
+    label: Biology
+  - tag: 'climatescience'
+    label: Climate Science
+
+  # Hardware & Gadgets
+  - tag: 'laptops'
+    label: Laptops
+  - tag: 'mobiledevices'
+    label: Mobile Devices
+  - tag: 'pccomponents'
+    label: PC Components
+  - tag: 'smarthome'
+    label: Smart Home
+  - tag: 'wearables'
+    label: Wearables
+  - tag: 'makerhardware'
+    label: Maker Hardware
+
+  # Gaming
+  - tag: 'pcgaming'
+    label: PC Gaming
+  - tag: 'consolegaming'
+    label: Console Gaming
+  - tag: 'mobilegaming'
+    label: Mobile Gaming
+  - tag: 'gamereviews'
+    label: Game Reviews
+  - tag: 'esports'
+    label: Esports
+
+  # Entertainment & Video
+  - tag: 'streamingvideo'
+    label: Streaming Video
+  - tag: 'shortvideo'
+    label: Short Video
+  - tag: 'moviesinfo'
+    label: Movies & Film
+  - tag: 'tvguides'
+    label: TV Guides
+  - tag: 'videoreviews'
+    label: Video Reviews
+
+  # Music & Audio
+  - tag: 'musicstreaming'
+    label: Music Streaming
+  - tag: 'podcasts'
+    label: Podcasts
+  - tag: 'audiogear'
+    label: Audio Gear
+  - tag: 'musicreviews'
+    label: Music Reviews
+  - tag: 'livemusic'
+    label: Live Music
+
+  # Photos & Media Creation
+  - tag: 'photohosting'
+    label: Photo Hosting
+  - tag: 'videoediting'
+    label: Video Editing
+  - tag: 'livestreamingtools'
+    label: Livestreaming Tools
+  - tag: 'stockmedia'
+    label: Stock Media
+  - tag: 'creativemarketplaces'
+    label: Creative Marketplaces
+
+  # Sports
+  - tag: 'scoresresults'
+    label: Scores & Results
+  - tag: 'fantasysports'
+    label: Fantasy Sports
+  - tag: 'teamsites'
+    label: Team Sites
+  - tag: 'outdoorsports'
+    label: Outdoor Sports
+  - tag: 'endurancesports'
+    label: Endurance Sports
+
+  # Home & Garden
+  - tag: 'homeimprovement'
+    label: Home Improvement
+  - tag: 'interiordesign'
+    label: Interior Design
+  - tag: 'gardening'
+    label: Gardening
+  - tag: 'appliances'
+    label: Appliances
+  - tag: 'diyprojects'
+    label: DIY Projects
+
+  # Real Estate
+  - tag: 'listings'
+    label: Home Listings
+  - tag: 'rentals'
+    label: Rentals
+  - tag: 'mortgagerates'
+    label: Mortgage Rates
+  - tag: 'homevaluation'
+    label: Home Valuation
+  - tag: 'movingservices'
+    label: Moving Services
+
+  # Careers & Jobs
+  - tag: 'jobboards'
+    label: Job Boards
+  - tag: 'professionalprofiles'
+    label: Professional Profiles
+  - tag: 'resumebuilders'
+    label: Resume Builders
+  - tag: 'interviewprep'
+    label: Interview Prep
+  - tag: 'salaryresearch'
+    label: Salary Research
+
+  # Business Operations
+  - tag: 'crmtools'
+    label: CRM Tools
+  - tag: 'accounting'
+    label: Accounting
+  - tag: 'hrtools'
+    label: HR & Benefits
+  - tag: 'procurement'
+    label: Procurement
+  - tag: 'businessnews'
+    label: Business News
+
+  # Nonprofit & Philanthropy
+  - tag: 'donations'
+    label: Donations
+  - tag: 'volunteering'
+    label: Volunteering
+  - tag: 'grants'
+    label: Grants & Funding
+  - tag: 'ngoresources'
+    label: NGO Resources
+
+  # Religion & Spirituality
+  - tag: 'faitheducation'
+    label: Faith Education
+  - tag: 'placesofworship'
+    label: Places of Worship
+  - tag: 'inspirationalmedia'
+    label: Inspirational Media
+  - tag: 'charityoutreach'
+    label: Charity Outreach
+
+  # Parenting & Family
+  - tag: 'pregnancy'
+    label: Pregnancy & Birth
+  - tag: 'childcare'
+    label: Childcare
+  - tag: 'familyactivities'
+    label: Family Activities
+  - tag: 'educationplanning'
+    label: Education Planning
+
+  # Pets & Animals
+  - tag: 'petcare'
+    label: Pet Care
+  - tag: 'pethealth'
+    label: Pet Health
+  - tag: 'petsupplies'
+    label: Pet Supplies
+  - tag: 'wildlife'
+    label: Wildlife & Nature
+  - tag: 'animalrescue'
+    label: Animal Rescue
+
+  # Security & Privacy
+  - tag: 'passwordmanagers'
+    label: Password Managers
+  - tag: 'vpn'
+    label: VPN & Secure Browsing
+  - tag: 'infosecnews'
+    label: InfoSec News
+  - tag: 'identityprotection'
+    label: Identity Protection
+  - tag: 'privacytools'
+    label: Privacy Tools

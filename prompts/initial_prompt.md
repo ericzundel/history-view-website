@@ -180,6 +180,7 @@ If a category does not have a 'type: primary' value, it's assumed to be secondar
 
 - Please include documentation about this in a README file somewhere close to the category file.
 - Pre-populate with ~40 primary categories and ~200 secondary categories; expect future manual adjustments.
+- Add a companion domain-category map in `config/domain-category-map.yaml` that assigns each domain a single primary tag and zero or more secondary tags (using the same tag/label terminology as `categories.yaml`). This file is checked in and maintained by hand to override or supplement automated classification.
 
 ## 9. Python Tooling
 
@@ -247,6 +248,7 @@ TODO:
 - [x] Implement python scripts that do data loading + favicon workflow with tests
 - [ ] Populate categories.yaml with the primary/secondary taxonomy
 - [ ] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
+- [ ] Add a github workflow that runs the logic in pre-commit hooks (check formatting, types, runs tests for node and python)
 - [ ] Document category mapping rules and data-processing workflow in docs/ and config/README.md
 - [ ] Generate mock pages for palette and layout exploration with Client-side routing
 - [ ] Design the bubble heatmap and overlay interactions
