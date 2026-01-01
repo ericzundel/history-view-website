@@ -65,7 +65,9 @@ pytest-cov==7.0.0
 python-dateutil==2.9.0.post0
     # via -r requirements-runtime.txt
 pyyaml==6.0.3
-    # via pre-commit
+    # via
+    #   -r requirements-runtime.txt
+    #   pre-commit
 ruff==0.14.10
     # via -r requirements-dev.txt
 six==1.17.0

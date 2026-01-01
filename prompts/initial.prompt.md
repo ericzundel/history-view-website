@@ -247,10 +247,10 @@ TODO:
 - [x] Add Python project config (uv requirements/pyproject, Ruff/mypy/pyright settings)
 - [x] Implement python scripts that do data loading + favicon workflow with tests
 - [x] Populate categories.yaml with the primary/secondary taxonomy
-- [ ] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
+- [x] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
 - [x] Add a github workflow that runs the logic in pre-commit hooks (check formatting, types, runs tests for node and python)
-- [ ] Document category mapping rules and data-processing workflow in docs/ and config/README.md
-- [ ] Generate mock pages for palette and layout exploration with Client-side routing
+- [x] Document category mapping rules and data-processing workflow in docs/ and config/README.md
+- [ ] Write a script that will use chatcpt's API to assist with categorizing domains based on the instructions in @make_category_map.prompt.md
 - [ ] Design the bubble heatmap and overlay interactions
 - [ ] Add Bubble heatmap landing view driven by level0.json
 - [ ] Add Animated treemap overlays with category drilldowns

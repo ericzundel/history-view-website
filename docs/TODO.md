@@ -8,3 +8,4 @@ Ideas for future improvements
 - Add async favicon fetching for better performance
 - More feedback on progress with fetch-favicons.sh
 - Document architectural decisions
+- lib/aggregator.py:167-193 loads all domain metadata into memory. For very large databases (millions of domains), this could be problematic. Suggestion: Consider streaming or batching for production use.

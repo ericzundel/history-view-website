@@ -56,7 +56,7 @@ I am building a visualization of my browsing history to make interesting content
 - `docs/`: deeper documentation (architecture decisions, historical specs, etc.).
 - `config/`: taxonomy (`categories.yaml`), domain blocklists, and related docs.
 - `raw-data/`: browser history exports (ignored except README).
-- `data/`: generated assets only (ignored except README).
+- `data/`: generated assets only (ignored except README). Visualization JSON/sprites live under `data/viz_data/`.
 - `scripts/`: shell scripts and Python tooling.
 - `scripts/tests/`: Python tests.
 - `mocks/`: design mock pages.
@@ -122,6 +122,7 @@ I am building a visualization of my browsing history to make interesting content
 
 - One favicon sprite per day/hour.
 - Client-side routing supported; Apache `.htaccess` rewrites required.
+- Generated visualization assets (level0.json, level1-\*.json, sprites) are written under `data/viz_data/` by the data-prep scripts.
 
 ---
 

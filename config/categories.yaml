@@ -122,6 +122,9 @@ categories:
   - tag: 'securityprivacy'
     label: Security & Privacy
     type: primary
+  - tag: 'other'
+    label: Other
+    type: primary
 
   # Secondary categories
   # News

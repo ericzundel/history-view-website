@@ -17,6 +17,7 @@
 - Tests: `uv run pytest scripts/tests`.
 - Data loaders live in `scripts/` (`load-chrome.py`, `load-edge.py`, `load-takeout.py`) with tests in `scripts/tests/`.
 - Favicon enrichment: `scripts/find-favicons.py`.
+- Aggregate JSON + sprites: `uv run python scripts/generate-datasets.py --db data/history.db --output data/viz_data` (add `--skip-sprites` if you only want the JSON).
 - Tooling configuration is centralized in `pyproject.toml` (Ruff/mypy/pyright).
 - Tools should target Python 3.14.
 
