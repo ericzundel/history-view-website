@@ -19,11 +19,12 @@ Purpose and maintenance notes for `config/categories.yaml`.
 ## Mapping guidelines
 
 - Prefer one primary tag per domain; apply multiple secondary tags as needed for nuance.
-- Use product intent over company name. Example: `mail.google.com` → `emailcalendar` + `webmail`; `maps.google.com` → `transportationmobility` + `navigation`.- For gray areas, bias toward the user-facing purpose (e.g., a dev blog under a cloud provider should go to `softwaredev` + `webdev` rather than `commerceshopping`).
+- Use product intent over company name. Example: `mail.google.com` → `emailcalendar` + `webmail`; `maps.google.com` → `transportationmobility` + `navigation`.
+- For gray areas, bias toward the user-facing purpose (e.g., a dev blog under a cloud provider should go to `softwaredev` + `webdev` rather than `commerceshopping`).
 - Keep security/privacy tools explicitly tagged with `securityprivacy` to support opt-in filtering.
 
 ## 'other' tag
 
 - If a domain name violates a privacy issue (see @make_category_map.prompt.md ) tag it with `securityprivacy`
-- If a domain name can't be easily classified, mark it with `other` This should be rare.
+- If a domain name can't be easily classified, mark it with `other`. This should be rare.
 - If you are running into many other tags (>10%) ask for clarification and update this section of this doc with more guidelines.
