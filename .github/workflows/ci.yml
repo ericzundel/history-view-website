@@ -41,7 +41,7 @@ jobs:
         run: npm run format
 
       - name: Lint TypeScript/React (ESLint)
-        run: npm run lint
+        run: npx eslint
 
       - name: Type-check TypeScript
         run: npm run typecheck
