@@ -11,6 +11,7 @@ from typing import Any, NotRequired, TypedDict, cast
 import yaml  # type: ignore[import-untyped]
 
 from lib.history_db import open_connection, resolve_db_path
+from lib.utils import as_str, normalize_domain
 
 # scripts/lib -> scripts -> repo root
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -121,9 +122,9 @@ def load_categories(path: Path = DEFAULT_CATEGORIES_PATH) -> dict[str, CategoryD
         if not isinstance(entry_obj, dict):
             continue
         entry = cast(dict[str, object], entry_obj)
-        tag = normalize_tag(_as_str(entry.get("tag")))
-        label = _as_str(entry.get("label")) or (tag[1:] if tag else "")
-        cat_type = _as_str(entry.get("type"))
+        tag = normalize_tag(as_str(entry.get("tag")))
+        label = as_str(entry.get("label")) or (tag[1:] if tag else "")
+        cat_type = as_str(entry.get("type"))
         if tag:
             categories[tag] = CategoryDef(tag=tag, label=label, type=cat_type)
     return categories
@@ -150,16 +151,16 @@ def load_domain_overrides(
         if not isinstance(entry_obj, dict):
             continue
         entry = cast(dict[str, object], entry_obj)
-        domain = _as_str(entry.get("domain"))
+        domain = as_str(entry.get("domain"))
         if not domain:
             continue
-        primary = normalize_tag(_as_str(entry.get("primary")))
+        primary = normalize_tag(as_str(entry.get("primary")))
         secondary: list[str] = []
         secondary_raw = entry.get("secondary")
         if isinstance(secondary_raw, list):
             items = cast(list[object], secondary_raw)
             for item in items:
-                tag = normalize_tag(_as_str(item))
+                tag = normalize_tag(as_str(item))
                 if tag:
                     secondary.append(tag)
         overrides[domain.lower()] = DomainOverride(primary=primary, secondary=secondary)
@@ -170,10 +171,10 @@ def _load_secondary_categories(conn: sqlite3.Connection) -> dict[str, set[str]]:
     cursor = conn.execute("SELECT domain, tag FROM secondary_categories")
     mapping: dict[str, set[str]] = {}
     for domain, tag in cursor.fetchall():
-        normalized = normalize_tag(_as_str(tag))
+        normalized = normalize_tag(as_str(tag))
         if not normalized:
             continue
-        domain_name = _as_str(domain)
+        domain_name = normalize_domain(domain)
         if not domain_name:
             continue
         mapping.setdefault(domain_name, _new_str_set()).add(normalized)
@@ -189,9 +190,9 @@ def _load_domain_metadata(
     )
     metadata: dict[str, DomainMetadata] = {}
     for domain, title, main_cat, mime, data in cursor.fetchall():
-        domain_name = _as_str(domain) or ""
-        override = overrides.get(domain_name.lower())
-        primary_tag = override.primary if override else normalize_tag(_as_str(main_cat))
+        domain_name = normalize_domain(domain) or ""
+        override = overrides.get(domain_name)
+        primary_tag = override.primary if override else normalize_tag(as_str(main_cat))
         base_secondary = secondary_map.get(domain_name)
         secondary_tags: set[str] = set(base_secondary) if base_secondary else set()
         if override:
@@ -199,10 +200,10 @@ def _load_domain_metadata(
         favicon_bytes = bytes(data) if isinstance(data, (bytes, bytearray)) else None
         metadata[domain_name] = DomainMetadata(
             domain=domain_name,
-            title=_as_str(title),
+            title=as_str(title),
             primary_tag=primary_tag,
             secondary_tags=secondary_tags,
-            favicon_type=_as_str(mime),
+            favicon_type=as_str(mime),
             favicon_data=favicon_bytes,
         )
     return metadata
@@ -212,8 +213,8 @@ def aggregate_visits(conn: sqlite3.Connection) -> dict[tuple[int, int], SlotAggr
     cursor = conn.execute("SELECT domain, timestamp FROM visits ORDER BY timestamp")
     aggregates: dict[tuple[int, int], SlotAggregate] = {}
     for domain, ts in cursor.fetchall():
-        domain_name = _as_str(domain) or ""
-        timestamp = _as_str(ts)
+        domain_name = normalize_domain(domain) or ""
+        timestamp = as_str(ts)
         if not timestamp:
             continue
         dt = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
@@ -286,6 +287,10 @@ def _render_sprite(symbols: list[SpriteSymbol]) -> str:
         ),
     ]
     for symbol in symbols:
+        # NB(zundel): This re-encodes the sprite for each datapoint.
+        # If this were to be a long running action, we could store the
+        # SVG icon back into the domains table to avoid repeated encoding,
+        # but it may be faster to just re-encode it every time.
         encoded = b64encode(symbol.data).decode("ascii")
         mime = symbol.mime_type or "image/png"
         lines.append(f'  <symbol id="{symbol.symbol_id}" viewBox="0 0 64 64">')
@@ -402,11 +407,3 @@ def write_outputs(
     return GenerationSummary(
         level0_entries=len(level0_data), level1_files=level1_written, sprite_files=sprite_written
     )
-
-
-def _as_str(value: object) -> str | None:
-    if value is None:
-        return None
-    if isinstance(value, str):
-        return value
-    return str(value)

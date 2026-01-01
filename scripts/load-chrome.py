@@ -10,13 +10,12 @@ from typing import Any, cast
 from lib.history_db import (
     LoaderStats,
     VisitRecord,
-    extract_domain,
-    normalize_timestamp,
     process_records,
     resolve_db_path,
     should_skip_url,
     summarize_stats,
 )
+from lib.utils import extract_domain, normalize_timestamp
 
 
 def parse_chrome_records(payload: object) -> Iterable[VisitRecord]:
