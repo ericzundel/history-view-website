@@ -4,6 +4,7 @@ import json
 import sqlite3
 from pathlib import Path
 
+import pytest
 from lib.aggregator import write_outputs
 from lib.history_db import SCHEMA
 
@@ -171,3 +172,126 @@ def test_skip_sprites_omits_sprite_files(tmp_path: Path) -> None:
     assert not (output_dir / "sprites").exists()
     level1 = json.loads((output_dir / "level1-0-01.json").read_text(encoding="utf-8"))
     assert "sprite" not in level1
+
+
+def test_empty_database(tmp_path: Path) -> None:
+    db_path = tmp_path / "history.db"
+    conn = sqlite3.connect(db_path)
+    conn.executescript(SCHEMA)
+    conn.commit()
+    conn.close()
+
+    categories_path = tmp_path / "categories.yaml"
+    categories_path.write_text("categories:\n  - tag: misc\n    label: Misc\n", encoding="utf-8")
+
+    output_dir = tmp_path / "out"
+    summary = write_outputs(
+        db_path=db_path,
+        output_dir=output_dir,
+        categories_path=categories_path,
+        domain_map_path=tmp_path / "domain-map.yaml",
+    )
+
+    assert summary.level0_entries == 0
+    assert summary.level1_files == 0
+    assert summary.sprite_files == 0
+    assert json.loads((output_dir / "level0.json").read_text(encoding="utf-8")) == []
+    assert list(output_dir.glob("level1-*.json")) == []
+    sprite_dir = output_dir / "sprites"
+    assert sprite_dir.exists()
+    assert list(sprite_dir.iterdir()) == []
+
+
+def test_malformed_categories_yaml(tmp_path: Path) -> None:
+    db_path = tmp_path / "history.db"
+    conn = sqlite3.connect(db_path)
+    conn.executescript(SCHEMA)
+    conn.commit()
+    conn.close()
+
+    categories_path = tmp_path / "categories.yaml"
+    categories_path.write_text("categories: not-a-list", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="categories.yaml must contain"):
+        write_outputs(
+            db_path=db_path,
+            output_dir=tmp_path / "out",
+            categories_path=categories_path,
+            domain_map_path=tmp_path / "domain-map.yaml",
+        )
+
+
+def test_missing_favicon_data(tmp_path: Path) -> None:
+    db_path = tmp_path / "history.db"
+    conn = sqlite3.connect(db_path)
+    conn.executescript(SCHEMA)
+    conn.execute(
+        """
+        INSERT INTO domains (domain, title, num_visits, checked, check_timestamp,
+                             favicon_type, favicon_data, main_category)
+        VALUES (?, ?, 0, 1, NULL, ?, NULL, ?)
+        """,
+        ("example.com", "Example", "image/png", "news"),
+    )
+    conn.execute(
+        "INSERT INTO visits (domain, timestamp) VALUES (?, ?)",
+        ("example.com", "2024-06-02 01:00:00"),
+    )
+    conn.commit()
+    conn.close()
+
+    categories_path = tmp_path / "categories.yaml"
+    categories_path.write_text("categories:\n  - tag: news\n    label: News\n", encoding="utf-8")
+
+    output_dir = tmp_path / "out"
+    summary = write_outputs(
+        db_path=db_path,
+        output_dir=output_dir,
+        categories_path=categories_path,
+        domain_map_path=tmp_path / "domain-map.yaml",
+    )
+
+    assert summary.level1_files == 1
+    level1 = json.loads((output_dir / "level1-0-01.json").read_text(encoding="utf-8"))
+    site_entry = level1["categories"][0]["sites"][0]
+    assert "favicon_symbol_id" not in site_entry
+    sprite_content = (output_dir / "sprites" / "level1-0-01.svg").read_text(encoding="utf-8")
+    assert "<symbol" not in sprite_content
+
+
+def test_domain_without_primary_category(tmp_path: Path) -> None:
+    db_path = tmp_path / "history.db"
+    conn = sqlite3.connect(db_path)
+    conn.executescript(SCHEMA)
+    conn.execute(
+        """
+        INSERT INTO domains (domain, title, num_visits, checked, check_timestamp,
+                             favicon_type, favicon_data, main_category)
+        VALUES (?, ?, 0, 1, NULL, NULL, NULL, NULL)
+        """,
+        ("no-category.test", None),
+    )
+    conn.execute(
+        "INSERT INTO visits (domain, timestamp) VALUES (?, ?)",
+        ("no-category.test", "2024-06-03 09:00:00"),
+    )
+    conn.commit()
+    conn.close()
+
+    categories_path = tmp_path / "categories.yaml"
+    categories_path.write_text("categories:\n  - tag: misc\n    label: Misc\n", encoding="utf-8")
+
+    output_dir = tmp_path / "out"
+    summary = write_outputs(
+        db_path=db_path,
+        output_dir=output_dir,
+        categories_path=categories_path,
+        domain_map_path=tmp_path / "domain-map.yaml",
+    )
+
+    assert summary.level1_files == 1
+    level1 = json.loads((output_dir / "level1-1-09.json").read_text(encoding="utf-8"))
+    assert level1["categories"] == []
+    uncategorized = level1["uncategorized"]
+    assert len(uncategorized) == 1
+    assert uncategorized[0]["domain"] == "no-category.test"
