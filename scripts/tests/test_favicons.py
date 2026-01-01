@@ -158,7 +158,7 @@ def test_refresh_favicons_dry_run_leaves_database_unchanged(tmp_path: Path) -> N
 
 def test_refresh_favicons_skips_ip_and_marks_checked(tmp_path: Path) -> None:
     db_path = tmp_path / "history.db"
-    _seed_domain(db_path, "LOCAL_DEVELOPMENT")
+    _seed_domain(db_path, "local_development")
 
     client = _build_mock_client()
     stats = favicons.refresh_favicons(
@@ -176,7 +176,7 @@ def test_refresh_favicons_skips_ip_and_marks_checked(tmp_path: Path) -> None:
 
     conn = sqlite3.connect(db_path)
     row = conn.execute(
-        "SELECT checked, favicon_data FROM domains WHERE domain = ?", ("LOCAL_DEVELOPMENT",)
+        "SELECT checked, favicon_data FROM domains WHERE domain = ?", ("local_development",)
     ).fetchone()
     conn.close()
 

@@ -13,11 +13,13 @@ from urllib.parse import urljoin
 import httpx
 from bs4 import BeautifulSoup
 from lib.history_db import (
-    is_ip_or_local,
     load_blocklist,
     open_connection,
     resolve_db_path,
     should_skip_blocklisted,
+)
+from lib.utils import (
+    is_ip_or_local,
 )
 
 USER_AGENT = "history-view-favicon-fetcher/0.1"

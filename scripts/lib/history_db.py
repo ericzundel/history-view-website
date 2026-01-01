@@ -3,13 +3,12 @@ from __future__ import annotations
 import sqlite3
 from collections.abc import Iterable
 from dataclasses import dataclass
-from datetime import UTC, datetime
-from ipaddress import IPv4Address, IPv6Address, ip_address
 from pathlib import Path
-from typing import Any, cast
 from urllib.parse import urlparse
 
-from dateutil import parser  # type: ignore[import-untyped]
+from lib.utils import (
+    normalize_domain,
+)
 
 SCHEMA = """
 PRAGMA foreign_keys = ON;
@@ -45,7 +44,6 @@ CREATE TABLE IF NOT EXISTS secondary_categories (
 
 """.strip()
 
-LOCAL_DEVELOPMENT = "LOCAL_DEVELOPMENT"
 DEFAULT_BLOCKLIST_PATH = Path(__file__).resolve().parent.parent / "config" / "domain-blocklist.yml"
 
 
@@ -87,77 +85,6 @@ def load_blocklist(path: Path | None = None) -> set[str]:
         if stripped:
             entries.add(stripped.lower())
     return entries
-
-
-def _normalize_epoch(value: float) -> float:
-    if value > 1e14:
-        return value / 1_000_000
-    if value > 1e12:
-        return value / 1000
-    return value
-
-
-def normalize_timestamp(raw: object) -> str:
-    dt = _parse_datetime(raw)
-    if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=UTC)
-    else:
-        dt = dt.astimezone(UTC)
-    return dt.strftime("%Y-%m-%d %H:%M:%S")
-
-
-def _parse_datetime(raw: object) -> datetime:
-    if isinstance(raw, datetime):
-        return raw
-    if isinstance(raw, (int, float)):
-        seconds = _normalize_epoch(float(raw))
-        return datetime.fromtimestamp(seconds, tz=UTC)
-    if isinstance(raw, str):
-        stripped = raw.strip()
-        if stripped.isdigit():
-            seconds = _normalize_epoch(float(int(stripped)))
-            return datetime.fromtimestamp(seconds, tz=UTC)
-        try:
-            parsed: Any = parser.parse(stripped)
-            return cast(datetime, parsed)
-        except parser.ParserError as exc:
-            raise ValueError(f"Unable to parse timestamp: {raw!r}") from exc
-    raise ValueError(f"Unsupported timestamp value: {raw!r}")
-
-
-def extract_domain(url: str) -> str:
-    candidate = url.strip()
-    if "://" not in candidate:
-        candidate = f"http://{candidate}"
-    parsed = urlparse(candidate)
-    netloc = parsed.netloc or parsed.path.split("/")[0]
-    host = netloc.split("@")[-1].split(":")[0].lower()
-    if host.startswith("www."):
-        host = host[4:]
-    if not host:
-        raise ValueError(f"Could not extract domain from URL: {url!r}")
-    try:
-        ip_obj = ip_address(host)
-    except ValueError:
-        return host
-
-    if _is_private_ip(ip_obj):
-        return LOCAL_DEVELOPMENT
-    return host
-
-
-def _is_private_ip(ip_obj: IPv4Address | IPv6Address) -> bool:
-    return ip_obj.is_private or ip_obj.is_loopback or ip_obj.is_link_local
-
-
-def is_ip_or_local(domain: str) -> bool:
-    if domain == LOCAL_DEVELOPMENT:
-        return True
-    try:
-        ip_address(domain)
-        return True
-    except ValueError:
-        return False
 
 
 def should_skip_url(url: str) -> tuple[bool, str | None]:
@@ -283,6 +210,7 @@ def process_records(
         for record in records:
             if limit is not None and stats.processed >= limit:
                 break
+            record.domain = normalize_domain(record.domain) or ""
             stats.processed += 1
             if should_skip_blocklisted(record.domain, blocklist):
                 stats.skipped += 1

@@ -134,4 +134,4 @@ def test_loaders_normalize_private_ip_to_sentinel(tmp_path: Path) -> None:
     domains = conn.execute("SELECT domain FROM domains ORDER BY domain").fetchall()
     conn.close()
 
-    assert [row[0] for row in domains] == ["8.8.8.8", "LOCAL_DEVELOPMENT"]
+    assert [row[0] for row in domains] == ["8.8.8.8", "local_development"]
