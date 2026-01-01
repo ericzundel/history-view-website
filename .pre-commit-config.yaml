@@ -69,6 +69,7 @@ repos:
           - --
         language: system
         files: "\\.(tsx?|ts|mts|cts)$"
+        stages: [pre-push]
 
       - id: test-vitest
         name: Run Vitest suite
@@ -77,6 +78,7 @@ repos:
         language: system
         pass_filenames: false
         files: "\\.(tsx?|ts|jsx?|mts|cts)$"
+        stages: [pre-push]
 
       - id: format-ruff
         name: Format Python with Ruff
@@ -102,6 +104,7 @@ repos:
         language: system
         pass_filenames: false
         files: "\\.py$"
+        stages: [pre-push]
 
       - id: typecheck-pyright
         name: Type-check Python (pyright)
@@ -112,6 +115,7 @@ repos:
         language: system
         pass_filenames: false
         files: "\\.py$"
+        stages: [pre-push]
 
       - id: test-pytest
         name: Run Python pytest suite
@@ -123,6 +127,7 @@ repos:
         language: system
         pass_filenames: false
         files: "\\.py$"
+        stages: [pre-push]
 
       - id: actionlint
         name: Check github workflow actions

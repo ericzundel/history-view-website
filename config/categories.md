@@ -7,7 +7,7 @@ Purpose and maintenance notes for `config/categories.yaml`.
 - Primary categories sit at the top with `type: primary`. They represent broad buckets used in the UI treemap overlays and downstream aggregation.
 - Secondary categories follow and omit `type`. They are finer-grained tags mapped under the primaries during curation.
 - Tags are lowercase hashtags without spaces (or the `#` character); concatenate words instead of using underscores. `label` holds the display text.
-- Current seed: 40 primary categories and 202 secondary categories (grouped under comment headers for quick scanning).
+- primary categories and secondary categories are grouped under comment headers for quick scanning.
 
 ## Editing workflow
 
@@ -21,3 +21,9 @@ Purpose and maintenance notes for `config/categories.yaml`.
 - Prefer one primary tag per domain; apply multiple secondary tags as needed for nuance.
 - Use product intent over company name. Example: `mail.google.com` → `emailcalendar` + `webmail`; `maps.google.com` → `transportationmobility` + `navigation`.- For gray areas, bias toward the user-facing purpose (e.g., a dev blog under a cloud provider should go to `softwaredev` + `webdev` rather than `commerceshopping`).
 - Keep security/privacy tools explicitly tagged with `securityprivacy` to support opt-in filtering.
+
+## 'other' tag
+
+- If a domain name violates a privacy issue (see @make_category_map.prompt.md ) tag it with `securityprivacy`
+- If a domain name can't be easily classified, mark it with `other` This should be rare.
+- If you are running into many other tags (>10%) ask for clarification and update this section of this doc with more guidelines.

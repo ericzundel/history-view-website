@@ -116,3 +116,4 @@ __pycache__/
 .coverage
 config/domain-blocklist.yml
 config/domain-category-map.yaml
+.cache
