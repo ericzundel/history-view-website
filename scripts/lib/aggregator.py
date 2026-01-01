@@ -100,6 +100,13 @@ def normalize_tag(raw: str | None) -> str | None:
     return f"#{cleaned}"
 
 
+def _normalize_domain(raw: object) -> str | None:
+    name = _as_str(raw)
+    if not name:
+        return None
+    return name.lower()
+
+
 def load_categories(path: Path = DEFAULT_CATEGORIES_PATH) -> dict[str, CategoryDef]:
     if not path.exists():
         raise FileNotFoundError(f"Categories file not found: {path}")
@@ -173,7 +180,7 @@ def _load_secondary_categories(conn: sqlite3.Connection) -> dict[str, set[str]]:
         normalized = normalize_tag(_as_str(tag))
         if not normalized:
             continue
-        domain_name = _as_str(domain)
+        domain_name = _normalize_domain(domain)
         if not domain_name:
             continue
         mapping.setdefault(domain_name, _new_str_set()).add(normalized)
@@ -189,8 +196,8 @@ def _load_domain_metadata(
     )
     metadata: dict[str, DomainMetadata] = {}
     for domain, title, main_cat, mime, data in cursor.fetchall():
-        domain_name = _as_str(domain) or ""
-        override = overrides.get(domain_name.lower())
+        domain_name = _normalize_domain(domain) or ""
+        override = overrides.get(domain_name)
         primary_tag = override.primary if override else normalize_tag(_as_str(main_cat))
         base_secondary = secondary_map.get(domain_name)
         secondary_tags: set[str] = set(base_secondary) if base_secondary else set()
@@ -212,7 +219,7 @@ def aggregate_visits(conn: sqlite3.Connection) -> dict[tuple[int, int], SlotAggr
     cursor = conn.execute("SELECT domain, timestamp FROM visits ORDER BY timestamp")
     aggregates: dict[tuple[int, int], SlotAggregate] = {}
     for domain, ts in cursor.fetchall():
-        domain_name = _as_str(domain) or ""
+        domain_name = _normalize_domain(domain) or ""
         timestamp = _as_str(ts)
         if not timestamp:
             continue

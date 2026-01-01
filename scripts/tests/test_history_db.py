@@ -115,8 +115,11 @@ def test_process_records_respects_blocklist(tmp_path: Path) -> None:
     assert stats.skipped == 2
     conn = sqlite3.connect(db_path)
     domains = {row[0] for row in conn.execute("SELECT domain FROM domains")}
+    count = {int(row[0]) for row in conn.execute("SELECT count(domain) FROM domains")}
+
     conn.close()
     assert domains == {"allowed.com"}
+    assert count == {1}
 
 
 def test_should_skip_blocklisted_helper() -> None:

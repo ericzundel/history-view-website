@@ -173,7 +173,7 @@ def should_skip_url(url: str) -> tuple[bool, str | None]:
 def should_skip_blocklisted(domain: str, blocklist: set[str] | None) -> bool:
     if not blocklist:
         return False
-    parts = domain.split(".")
+    parts = domain.lower().split(".")
     for idx in range(len(parts) - 1):
         candidate = ".".join(parts[idx:])
         if candidate in blocklist:
