@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -26,15 +26,15 @@ jobs:
         run: npm ci
 
       - name: Set up Python and uv
-        uses: astral-sh/setup-uv@v2
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: '3.12'
+          python-version: '3.14'
 
       - name: Install Python dependencies
         run: |
-          uv python install 3.14
+
           uv venv --python 3.14
-          uv pip install -r requrements_lock.txt
+          uv pip install -r requirements_lock.txt
           uv sync --locked --extra dev
 
       - name: Check formatting (Prettier)
