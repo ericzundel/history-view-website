@@ -113,5 +113,6 @@ __pycache__/
 .eggs/
 .mypy_cache/
 .pytest_cache/
+.coverage
 config/domain-blocklist.yml
 config/domain-category-map.yaml

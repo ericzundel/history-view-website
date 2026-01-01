@@ -61,5 +61,5 @@ jobs:
       - name: Type-check Python (pyright)
         run: uv run pyright
 
-      - name: Run pytest
-        run: uv run pytest scripts/tests
+      - name: Run tests and print test coverage output
+        run: uv run pytest --cov=scripts --cov-branch scripts/tests
