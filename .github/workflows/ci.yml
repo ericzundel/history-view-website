@@ -40,7 +40,7 @@ jobs:
           #uv sync --locked --extra dev
 
       - name: Check formatting (Prettier)
-        run: uv runnpm run format
+        run: npm run format
 
       - name: Lint TypeScript/React (ESLint)
         run: npx eslint
