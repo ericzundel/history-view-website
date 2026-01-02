@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 
 type Level0Entry = {
@@ -150,6 +150,9 @@ function App() {
   const [level1, setLevel1] = useState<Level1Data | null>(null);
   const [level1Loading, setLevel1Loading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Level1Category | null>(null);
+  
+  const triggerElementRef = useRef<HTMLElement | null>(null);
+  const overlayPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let active = true;
@@ -262,6 +265,61 @@ function App() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [selectedCell]);
 
+  // Focus trap: move focus to dialog on open and return to trigger on close
+  useEffect(() => {
+    if (selectedCell && overlayPanelRef.current) {
+      // Move focus to the overlay panel
+      overlayPanelRef.current.focus();
+    } else if (!selectedCell && triggerElementRef.current) {
+      // Return focus to the trigger element when dialog closes
+      triggerElementRef.current.focus();
+      triggerElementRef.current = null;
+    }
+  }, [selectedCell]);
+
+  // Focus trap: handle tab navigation within dialog
+  useEffect(() => {
+    if (!selectedCell || !overlayPanelRef.current) {
+      return undefined;
+    }
+
+    const handleTabKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      const panel = overlayPanelRef.current;
+      if (!panel) {
+        return;
+      }
+
+      // Get all focusable elements within the dialog
+      const focusableElements = panel.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const focusableArray = Array.from(focusableElements);
+      const firstElement = focusableArray[0];
+      const lastElement = focusableArray[focusableArray.length - 1];
+
+      if (event.shiftKey) {
+        // Shift + Tab: if focus is on first element, move to last
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        // Tab: if focus is on last element, move to first
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleTabKey);
+    return () => window.removeEventListener('keydown', handleTabKey);
+  }, [selectedCell]);
+
   const entryMap = useMemo(() => {
     const map = new Map<string, Level0Entry>();
     level0.forEach((entry) => {
@@ -342,7 +400,10 @@ function App() {
                       key={`cell-${dayIndex}-${hour}`}
                       className="heatmap-cell"
                       type="button"
-                      onClick={() => setSelectedCell({ day: dayIndex, hour, value: value || 0 })}
+                      onClick={(event) => {
+                        triggerElementRef.current = event.currentTarget;
+                        setSelectedCell({ day: dayIndex, hour, value: value || 0 });
+                      }}
                       aria-label={`${dayLabel} at ${formatHourLabel(hour)} with ${value} visits`}
                     >
                       <span
@@ -373,7 +434,7 @@ function App() {
 
       {selectedCell ? (
         <div className="overlay" role="dialog" aria-modal="true">
-          <div className="overlay-panel">
+          <div className="overlay-panel" ref={overlayPanelRef} tabIndex={-1}>
             <div className="overlay-header">
               <div>
                 <p className="overlay-kicker">Heatmap drill-down</p>
