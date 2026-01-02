@@ -13,7 +13,7 @@ Context to get up to speed quickly on this repo.
 
 - Front-end: Vite + TypeScript (strict), modern browsers only. Provide bubble-heatmap + treemap overlays with animations and client-side routing.
 - Node: use `nvm` with Node 24.
-- Python: 3.14 managed via `uv` dependencies are managed in `pyproject.toml` you can run some tools with `uvx`; checking/formatting:wq uses Ruff + mypy + pyright; tests required.
+- Python: 3.14 managed via `uv` dependencies are managed in `pyproject.toml` you can run some tools with `uvx`; checking/formatting uses Ruff + mypy + pyright; tests required.
 - If PyPI/network is blocked, run Python tests from the local venv instead: `source .venv/bin/activate && pytest scripts/tests`. Use the same pattern for other CLI checks to avoid uv build-time downloads.
 - Deployment: static assets via `scp` to shared hosting using `.env` variables; Apache `.htaccess` routing assumed.
 - Git hooks should enforce lint/format/type checks.
