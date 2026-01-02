@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { normalizeLevel0, type Level0Entry } from './app-utils';
 
@@ -125,6 +125,8 @@ function App() {
   const [level1, setLevel1] = useState<Level1Data | null>(null);
   const [level1Loading, setLevel1Loading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Level1Category | null>(null);
+  const triggerElementRef = useRef<HTMLElement | null>(null);
+  const overlayPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let active = true;
@@ -235,6 +237,61 @@ function App() {
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
+  }, [selectedCell]);
+
+  // Focus trap: move focus to dialog on open and return to trigger on close
+  useEffect(() => {
+    if (selectedCell && overlayPanelRef.current) {
+      // Move focus to the overlay panel
+      overlayPanelRef.current.focus();
+    } else if (!selectedCell && triggerElementRef.current) {
+      // Return focus to the trigger element when dialog closes
+      triggerElementRef.current.focus();
+      triggerElementRef.current = null;
+    }
+  }, [selectedCell]);
+
+  // Focus trap: handle tab navigation within dialog
+  useEffect(() => {
+    if (!selectedCell || !overlayPanelRef.current) {
+      return undefined;
+    }
+
+    const handleTabKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      const panel = overlayPanelRef.current;
+      if (!panel) {
+        return;
+      }
+
+      // Get all focusable elements within the dialog
+      const focusableElements = panel.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), audio[controls], video[controls], [contenteditable]:not([contenteditable="false"])'
+      );
+      const focusableArray = Array.from(focusableElements);
+      const firstElement = focusableArray[0];
+      const lastElement = focusableArray[focusableArray.length - 1];
+
+      if (event.shiftKey) {
+        // Shift + Tab: if focus is on first element, move to last
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        // Tab: if focus is on last element, move to first
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleTabKey);
+    return () => window.removeEventListener('keydown', handleTabKey);
   }, [selectedCell]);
 
   const entryMap = useMemo(() => {
