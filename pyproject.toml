@@ -68,8 +68,9 @@ include = ["scripts"]
 ignore = ["node_modules", ".venv", "dist"]
 venvPath = "."
 venv = ".venv"
-reportMissingTypeStubs = false
 reportMissingImports = "error"
+reportUnknownArgumentType = false
+reportUnknownVariableType = false
 
 [tool.history-view]
 python-version = "3.14"

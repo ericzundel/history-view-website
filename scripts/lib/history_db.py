@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import sqlite3
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -9,6 +10,8 @@ from urllib.parse import urlparse
 from lib.utils import (
     normalize_domain,
 )
+
+logger = logging.getLogger(__name__)
 
 SCHEMA = """
 PRAGMA foreign_keys = ON;

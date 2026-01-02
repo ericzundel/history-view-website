@@ -114,6 +114,7 @@ __pycache__/
 .mypy_cache/
 .pytest_cache/
 .coverage
-config/domain-blocklist.yml
-config/domain-category-map.yaml
+domain-blocklist.yml
+domain-category-map.yaml*
+
 .cache
