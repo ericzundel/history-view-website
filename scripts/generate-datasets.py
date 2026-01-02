@@ -51,6 +51,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Skip sprite generation (sprite paths will be omitted from JSON).",
     )
+    parser.add_argument(
+        "--timezone",
+        default="America/New_York",
+        help="IANA timezone for bucketed day/hour output (default: America/New_York).",
+    )
     return parser
 
 
@@ -63,6 +68,7 @@ def main() -> None:
         domain_map_path=args.domain_map,
         sprite_dir=args.sprites,
         skip_sprites=args.skip_sprites,
+        timezone_name=args.timezone,
     )
     sprite_clause = (
         f"sprites: {summary.sprite_files}" if not args.skip_sprites else "sprites: skipped"

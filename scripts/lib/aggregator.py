@@ -4,9 +4,10 @@ import json
 import sqlite3
 from base64 import b64encode
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, NotRequired, TypedDict, cast
+from zoneinfo import ZoneInfo
 
 import yaml
 
@@ -209,7 +210,9 @@ def _load_domain_metadata(
     return metadata
 
 
-def aggregate_visits(conn: sqlite3.Connection) -> dict[tuple[int, int], SlotAggregate]:
+def aggregate_visits(
+    conn: sqlite3.Connection, local_tz: ZoneInfo
+) -> dict[tuple[int, int], SlotAggregate]:
     cursor = conn.execute("SELECT domain, timestamp FROM visits ORDER BY timestamp")
     aggregates: dict[tuple[int, int], SlotAggregate] = {}
     for domain, ts in cursor.fetchall():
@@ -218,6 +221,7 @@ def aggregate_visits(conn: sqlite3.Connection) -> dict[tuple[int, int], SlotAggr
         if not timestamp:
             continue
         dt = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+        dt = dt.replace(tzinfo=UTC).astimezone(local_tz)
         weekday = dt.weekday()  # Monday=0
         day = (weekday + 1) % 7  # Sunday=0
         hour = dt.hour
@@ -366,11 +370,13 @@ def write_outputs(
     domain_map_path: Path = DEFAULT_DOMAIN_MAP_PATH,
     sprite_dir: Path | None = None,
     skip_sprites: bool = False,
+    timezone_name: str = "America/New_York",
 ) -> GenerationSummary:
     resolved_db = resolve_db_path(db_path)
     conn = open_connection(resolved_db, dry_run=True)
     try:
-        aggregates = aggregate_visits(conn)
+        local_tz = ZoneInfo(timezone_name)
+        aggregates = aggregate_visits(conn, local_tz)
         categories = load_categories(categories_path)
         overrides = load_domain_overrides(domain_map_path)
         metadata = _load_domain_metadata(conn, overrides)
