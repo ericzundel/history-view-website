@@ -200,6 +200,10 @@ categories:
     label: Kotlin
   - tag: 'rust'
     label: Rust
+  - tag: 'bazel'
+    label: Bazel
+  - tag: 'buildtools'
+    label: Build Tools
 
   # Data & AI
   - tag: 'mlplatforms'
