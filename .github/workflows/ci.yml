@@ -33,11 +33,7 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-
-          uv venv --python 3.14
-          uv pip install -r requirements_lock.txt
-          #This is for requirements being stored in pyproject.toml
-          #uv sync --locked --extra dev
+          uv sync --locked --extra dev
 
       - name: Check formatting (Prettier)
         run: npm run format
