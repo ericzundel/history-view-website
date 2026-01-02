@@ -289,7 +289,7 @@ function App() {
           </p>
           {useFallback ? (
             <p className="fallback-note">
-              Sample data is displayed. Add `data/viz_data/level0.json` to see live results.
+              Sample data is displayed. Add <code>data/viz_data/level0.json</code> to see live results.
             </p>
           ) : null}
         </div>
@@ -384,7 +384,12 @@ function App() {
                   {selectedCell.value.toLocaleString()} visits during this hour.
                 </p>
               </div>
-              <button className="overlay-close" type="button" onClick={() => setSelectedCell(null)}>
+              <button
+                className="overlay-close"
+                type="button"
+                aria-label="Close heatmap drill-down dialog"
+                onClick={() => setSelectedCell(null)}
+              >
                 Close
               </button>
             </div>

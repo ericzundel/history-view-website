@@ -140,7 +140,7 @@ All timestamps are UTC (`YYYY-MM-DD HH:MM:SS`).
 
 - Dataset generation converts UTC timestamps into a configurable local timezone for day/hour
   bucketing. `scripts/generate-datasets.py` accepts `--timezone` (IANA timezone name) and defaults
-  to `America/New_York` (Atlanta time).
+  to `America/New_York` (Eastern Time).
 
 ```sql
 create table visits (
