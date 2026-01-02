@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, NotRequired, TypedDict, cast
 
-import yaml  # type: ignore[import-untyped]
+import yaml
 
 from lib.history_db import open_connection, resolve_db_path
 from lib.utils import as_str, normalize_domain
