@@ -295,7 +295,7 @@ function App() {
 
       // Get all focusable elements within the dialog
       const focusableElements = panel.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), audio[controls], video[controls], [contenteditable]:not([contenteditable="false"])'
       );
       const focusableArray = Array.from(focusableElements);
       const firstElement = focusableArray[0];
@@ -445,7 +445,12 @@ function App() {
                   {selectedCell.value.toLocaleString()} visits during this hour.
                 </p>
               </div>
-              <button className="overlay-close" type="button" onClick={() => setSelectedCell(null)}>
+              <button 
+                className="overlay-close" 
+                type="button" 
+                onClick={() => setSelectedCell(null)}
+                aria-label="Close overlay dialog"
+              >
                 Close
               </button>
             </div>
