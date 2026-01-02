@@ -1,13 +1,7 @@
 import './App.css';
 import { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
-
-type Level0Entry = {
-  day: number;
-  hour: number;
-  value: number;
-  size: number;
-};
+import { normalizeLevel0, type Level0Entry } from './app-utils';
 
 type Level1Site = {
   title: string;
@@ -122,28 +116,6 @@ const buildFallbackLevel1 = (day: number, hour: number): Level1Data => ({
   ],
   uncategorized: [],
 });
-
-const normalizeLevel0 = (entries: unknown): Level0Entry[] => {
-  if (!Array.isArray(entries)) {
-    return [];
-  }
-  return entries
-    .map((entry) => {
-      if (typeof entry !== 'object' || entry === null) {
-        return null;
-      }
-      const record = entry as Record<string, string | number>;
-      const day = Number(record.day);
-      const hour = Number(record.hour);
-      const value = Number(record.value);
-      const size = Number(record.size);
-      if (Number.isNaN(day) || Number.isNaN(hour) || Number.isNaN(value) || Number.isNaN(size)) {
-        return null;
-      }
-      return { day, hour, value, size };
-    })
-    .filter((entry): entry is Level0Entry => entry !== null);
-};
 
 function App() {
   const [level0, setLevel0] = useState<Level0Entry[]>([]);
@@ -292,7 +264,8 @@ function App() {
           </p>
           {useFallback ? (
             <p className="fallback-note">
-              Sample data is displayed. Add <code>data/viz_data/level0.json</code> to see live results.
+              Sample data is displayed. Add <code>data/viz_data/level0.json</code> to see live
+              results.
             </p>
           ) : null}
         </div>

@@ -1,6 +1,7 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
+import { normalizeLevel0 } from './app-utils';
 
 describe('App', () => {
   const mockFetch = (responses: Array<{ ok: boolean; json: () => Promise<unknown> }>) => {
@@ -221,5 +222,41 @@ describe('App', () => {
       expect(screen.queryByRole('heading', { name: /thursday · 17:00/i })).toBeNull();
     });
     await flushEffects();
+  });
+
+  describe('normalizeLevel0', () => {
+    it('returns an empty array for non-array inputs', () => {
+      expect(normalizeLevel0(null)).toEqual([]);
+      expect(normalizeLevel0(undefined)).toEqual([]);
+      expect(normalizeLevel0({})).toEqual([]);
+      expect(normalizeLevel0('nope')).toEqual([]);
+    });
+
+    it('filters out malformed entries and non-numeric values', () => {
+      expect(
+        normalizeLevel0([
+          null,
+          {},
+          { day: 'x', hour: 1, value: 2, size: 3 },
+          { day: 0, hour: 'y', value: 2, size: 3 },
+          { day: 0, hour: 1, value: 'z', size: 3 },
+          { day: 0, hour: 1, value: 2, size: 'bad' },
+        ])
+      ).toEqual([]);
+    });
+
+    it('coerces numeric strings and drops entries with missing fields', () => {
+      expect(
+        normalizeLevel0([
+          { day: '0', hour: '1', value: '10', size: '80' },
+          { day: 2, hour: 3, value: 4, size: 50 },
+          { day: 1, hour: 4, value: 2 },
+          { day: 1, value: 2, size: 3 },
+        ])
+      ).toEqual([
+        { day: 0, hour: 1, value: 10, size: 80 },
+        { day: 2, hour: 3, value: 4, size: 50 },
+      ]);
+    });
   });
 });
