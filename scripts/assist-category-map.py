@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import sqlite3
 import time
@@ -20,6 +21,8 @@ DEFAULT_MODEL = "gpt-4o-mini"
 OPENAI_ENDPOINT = "https://api.openai.com/v1/chat/completions"
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -104,7 +107,8 @@ def load_domain_map(path: Path) -> dict[str, DomainMapping]:
         return {}
     payload_obj: object = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     payload = _ensure_mapping(payload_obj, context=f"{path}")
-    raw_domains = _ensure_list(payload.get("domains", []), context=f"{path} domains")
+    domains = payload.get("domains", []) or [{}]  # type: ignore
+    raw_domains = _ensure_list(domains, context=f"{path} domains")  # type: ignore
 
     mapping: dict[str, DomainMapping] = {}
     for entry_obj in raw_domains:
@@ -214,6 +218,7 @@ def request_classifications(
     model: str,
     messages: list[dict[str, str]],
 ) -> dict[str, Any]:
+    logger.info("Requesting classifications from OpenAI API")
     response = client.post(
         OPENAI_ENDPOINT,
         json={
@@ -308,7 +313,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--delay",
         type=float,
-        default=0.0,
+        default=5.0,
         help="Seconds to sleep between API requests.",
     )
     parser.add_argument(
@@ -326,6 +331,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    logging.basicConfig(level=logging.INFO)
+
     args = build_parser().parse_args()
     if not args.api_key:
         raise SystemExit("Missing OPENAI_API_KEY (or pass --api-key).")
