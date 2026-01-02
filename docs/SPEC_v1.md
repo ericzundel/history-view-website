@@ -138,6 +138,10 @@ I am building a visualization of my browsing history to make interesting content
 
 All timestamps are UTC (`YYYY-MM-DD HH:MM:SS`).
 
+- Dataset generation converts UTC timestamps into a configurable local timezone for day/hour
+  bucketing. `scripts/generate-datasets.py` accepts `--timezone` (IANA timezone name) and defaults
+  to `America/New_York` (Atlanta time).
+
 ```sql
 create table visits (
   id INTEGER PRIMARY KEY,

@@ -106,6 +106,7 @@ def test_generates_level_json_and_sprites(tmp_path: Path) -> None:
         output_dir=output_dir,
         categories_path=categories_path,
         domain_map_path=domain_map_path,
+        timezone_name="UTC",
     )
 
     assert summary.level0_entries == 2
@@ -166,6 +167,7 @@ def test_skip_sprites_omits_sprite_files(tmp_path: Path) -> None:
         output_dir=output_dir,
         categories_path=categories_path,
         skip_sprites=True,
+        timezone_name="UTC",
     )
 
     assert summary.sprite_files == 0
@@ -190,6 +192,7 @@ def test_empty_database(tmp_path: Path) -> None:
         output_dir=output_dir,
         categories_path=categories_path,
         domain_map_path=tmp_path / "domain-map.yaml",
+        timezone_name="UTC",
     )
 
     assert summary.level0_entries == 0
@@ -218,6 +221,7 @@ def test_malformed_categories_yaml(tmp_path: Path) -> None:
             output_dir=tmp_path / "out",
             categories_path=categories_path,
             domain_map_path=tmp_path / "domain-map.yaml",
+            timezone_name="UTC",
         )
 
 
@@ -249,6 +253,7 @@ def test_missing_favicon_data(tmp_path: Path) -> None:
         output_dir=output_dir,
         categories_path=categories_path,
         domain_map_path=tmp_path / "domain-map.yaml",
+        timezone_name="UTC",
     )
 
     assert summary.level1_files == 1
@@ -287,6 +292,7 @@ def test_domain_without_primary_category(tmp_path: Path) -> None:
         output_dir=output_dir,
         categories_path=categories_path,
         domain_map_path=tmp_path / "domain-map.yaml",
+        timezone_name="UTC",
     )
 
     assert summary.level1_files == 1
