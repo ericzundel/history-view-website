@@ -221,6 +221,7 @@ h1 {
   transition: opacity 160ms ease;
   width: max-content;
   min-width: 120px;
+  z-index: 10;
 }
 
 .bubble-tooltip span {

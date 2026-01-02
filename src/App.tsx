@@ -54,6 +54,9 @@ const colorScale = [
   '#fbf0e1',
 ];
 
+const CATEGORY_SPAN_DIVISOR = 40;
+const SITE_SPAN_DIVISOR = 30;
+
 const formatHourLabel = (hour: number) => `${String(hour).padStart(2, '0')}:00`;
 
 const buildFallbackLevel0 = (): Level0Entry[] => {
@@ -415,7 +418,7 @@ function App() {
                           {
                             gridColumn: `span ${Math.min(
                               4,
-                              Math.max(1, Math.round(category.value / 40))
+                              Math.max(1, Math.round(category.value / CATEGORY_SPAN_DIVISOR))
                             )}`,
                           } as CSSProperties
                         }
@@ -445,7 +448,10 @@ function App() {
                         className="treemap-tile"
                         style={
                           {
-                            gridColumn: `span ${Math.min(3, Math.max(1, Math.round(site.value / 30)))}`,
+                            gridColumn: `span ${Math.min(
+                              3,
+                              Math.max(1, Math.round(site.value / SITE_SPAN_DIVISOR))
+                            )}`,
                           } as CSSProperties
                         }
                         target="_blank"
