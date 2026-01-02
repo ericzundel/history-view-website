@@ -70,6 +70,7 @@ venvPath = "."
 venv = ".venv"
 reportMissingImports = "error"
 reportUnknownArgumentType = false
+reportUnknownVariableType = false
 
 [tool.history-view]
 python-version = "3.14"
