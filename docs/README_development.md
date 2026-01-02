@@ -11,8 +11,7 @@
 ## Python
 
 - Requires Python 3.14 managed by `uv` (assumed installed).
-- Create venv: `uv venv --python 3.14` then `source .venv/bin/activate`.
-- Install deps from lockfile: `uv pip install -r requirements_lock.txt` (includes runtime + dev tooling). If you change requirements, regenerate the lock with `scripts/update-requirements.sh` (runs `uv pip compile requirements.txt > requirements_lock.txt`).
+- if you want a fresh python environment setup you can run `uv sync --extra dev`
 - Format/lint/type-check: `uv run ruff format .`, `uv run ruff check .`, `uv run mypy scripts`, `uv run pyright`.
 - Tests: `uv run pytest scripts/tests`.
 - Data loaders live in `scripts/` (`load-chrome.py`, `load-edge.py`, `load-takeout.py`) with tests in `scripts/tests/`.

@@ -250,7 +250,8 @@ TODO:
 - [x] Implement data-generation pipeline for level0/level1 JSON and favicon sprites
 - [x] Add a github workflow that runs the logic in pre-commit hooks (check formatting, types, runs tests for node and python)
 - [x] Document category mapping rules and data-processing workflow in docs/ and config/README.md
-- [ ] Write a script that will use chatcpt's API to assist with categorizing domains based on the instructions in @make_category_map.prompt.md
+- [x] Write a script that will use chatcpt's API to assist with categorizing domains based on the instructions in @make_category_map.prompt.md
+- [ ] Add a flag to allow the category-assist script to skip over domains in the file.
 - [ ] Design the bubble heatmap and overlay interactions
 - [ ] Add Bubble heatmap landing view driven by level0.json
 - [ ] Add Animated treemap overlays with category drilldowns

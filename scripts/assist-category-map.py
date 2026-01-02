@@ -327,6 +327,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Do not write updates to domain-category-map.yaml.",
     )
+    parser.add_argument(
+        "--skip-existing",
+        action="store_true",
+        help="Skip over domains that already have a category assigned in the map.",
+    )
     return parser
 
 
@@ -350,6 +355,8 @@ def main() -> None:
     for entry in domains:
         domain = entry.domain.lower()
         existing = domain_map.get(domain, DomainMapping())
+        if args.skip_existing and (existing.primary):
+            continue
         if args.mode == "secondary" and not existing.primary:
             continue
         needs_primary = args.mode in {"primary", "both"} and not existing.primary
@@ -372,6 +379,7 @@ def main() -> None:
     client = httpx.Client(headers=headers)
     try:
         for batch in iter_batches(pending, args.batch_size):
+            start_time = time.monotonic()
             messages = build_prompt(
                 batch,
                 primary_categories=primary_categories,
@@ -412,7 +420,11 @@ def main() -> None:
                 print("Dry run enabled; not writing domain-category-map.yaml.")
             else:
                 update_domain_map(args.map, domain_map)
+
+            end_time = time.monotonic()
+            logging.info(f"Batch processed in {end_time - start_time:.2f} seconds.")
             if args.delay:
+                logging.info(f"Sleeping for {args.delay} seconds before next batch...")
                 time.sleep(args.delay)
     finally:
         client.close()
