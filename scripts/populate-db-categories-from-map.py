@@ -26,7 +26,7 @@ def apply_mappings(
 ) -> UpdateStats:
     """Populate the history database from the domain mappings.
 
-    Populates the primary_category in the domains table and the
+    Populates the main_category in the domains table and the
     rows in the secondary_categories table.
     """
     stats = UpdateStats()

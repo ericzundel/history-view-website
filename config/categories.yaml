@@ -517,8 +517,6 @@ categories:
     label: Chemical Engineering
   - tag: 'biomedicalengineering'
     label: Biomedical Engineering
-  - tag: 'climatescience'
-    label: Climate Science
 
   # Hardware & Gadgets
   - tag: 'laptops'

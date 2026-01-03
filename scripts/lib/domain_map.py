@@ -38,7 +38,7 @@ def load_domain_map(path: Path) -> dict[str, DomainMapping]:
         return {}
     payload_obj: object = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     payload = ensure_mapping(payload_obj, context=f"{path}")
-    domains = payload.get("domains", []) or [{}]
+    domains = payload.get("domains") or []
     raw_domains = ensure_list(domains, context=f"{path} domains")
 
     mapping: dict[str, DomainMapping] = {}

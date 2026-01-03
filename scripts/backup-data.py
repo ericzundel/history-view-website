@@ -14,7 +14,7 @@ DEFAULT_DATA_DIR = REPO_ROOT / "data"
 
 
 def timestamp_suffix() -> str:
-    return datetime.now().astimezone().isoformat(sep=" ", timespec="seconds")
+    return datetime.now().astimezone().strftime("%Y%m%d-%H%M%S")
 
 
 def backup_file(source: Path, backup_dir: Path, suffix: str) -> Path | None:
