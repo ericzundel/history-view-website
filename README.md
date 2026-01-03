@@ -2,13 +2,13 @@
 
 Visualization of personal browsing history as a static single-page app with supporting data-prep tooling.
 
-## What this is
+## Overview
 
-- Front-end: Vite + TypeScript (strict), delivering a bubble heatmap with drill-down treemap overlays.
-- Tooling: Python 3.14 with `uv`, SQLite-backed loaders, favicon harvesting, and JSON/sprite generation.
-- Everything deploys as static assets to shared hosting.
+This script processes data from Google Takeout and browsing history files from the web browser to
+produce a visualization of browzing activity. Intended to be just a fun visualization for
+my personal website.
 
-## Repo map (planned)
+## Repo map
 
 - `src/` front-end SPA code
 - `public/` static assets and sprites
