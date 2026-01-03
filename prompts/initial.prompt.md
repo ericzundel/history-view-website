@@ -253,7 +253,8 @@ TODO:
 - [x] Write a script that will use chatcpt's API to assist with categorizing domains based on the instructions in @make_category_map.prompt.md
 - [x] Add a flag to allow the category-assist script to skip over domains in the file.
 - [x] Design the bubble heatmap and overlay interactions
-- [ ] Add Bubble heatmap landing view driven by level0.json
+- [x] Add Bubble heatmap landing view driven by level0.json
+- [ ] Populate the categories database with data from domain-category-map.yaml
 - [ ] Add Animated treemap overlays with category drilldowns
 - [ ] Wire data loaders to emit level0/level1 JSON + sprites
 - [ ] Connect deployment script to publish static assets

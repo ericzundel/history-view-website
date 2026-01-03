@@ -118,3 +118,5 @@ domain-blocklist.yml
 domain-category-map.yaml*
 
 .cache
+config/backups/
+data/backups/

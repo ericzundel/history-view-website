@@ -3,11 +3,16 @@ from ipaddress import ip_address
 
 import pytest
 from lib.utils import (
+    coerce_str,
+    ensure_list,
+    ensure_mapping,
     extract_domain,
     is_ip_or_local,
     is_private_ip,
+    merge_lists,
     normalize_domain,
     normalize_epoch,
+    normalize_tag,
     normalize_timestamp,
     parse_datetime,
 )
@@ -81,3 +86,31 @@ def test_normalize_timestamp_handles_naive_and_offset() -> None:
 
     offset = datetime(2024, 6, 1, 7, 34, 56, tzinfo=timezone(timedelta(hours=-5)))
     assert normalize_timestamp(offset) == "2024-06-01 12:34:56"
+
+
+def test_normalize_tag_strips_hash_and_whitespace() -> None:
+    assert normalize_tag(None) is None
+    assert normalize_tag("") is None
+    assert normalize_tag("  #News ") == "news"
+    assert normalize_tag("Tech") == "tech"
+
+
+def test_ensure_mapping_and_list_validate_types() -> None:
+    assert ensure_mapping({"a": 1}, context="mapping") == {"a": 1}
+    assert ensure_list([1, 2], context="list") == [1, 2]
+    with pytest.raises(ValueError, match="Expected mapping"):
+        ensure_mapping(["nope"], context="mapping")
+    with pytest.raises(ValueError, match="Expected list"):
+        ensure_list({"nope": 1}, context="list")
+
+
+def test_coerce_str_handles_none_and_whitespace() -> None:
+    assert coerce_str(None) is None
+    assert coerce_str("   ") is None
+    assert coerce_str(" ok ") == "ok"
+    assert coerce_str(123) == "123"
+
+
+def test_merge_lists_dedupes_and_sorts() -> None:
+    assert merge_lists(["b", "a"], ["b", "c"]) == ["a", "b", "c"]
+    assert merge_lists([], ["z", "y"]) == ["y", "z"]

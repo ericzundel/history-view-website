@@ -71,6 +71,14 @@ repos:
         files: "\\.(tsx?|ts|mts|cts)$"
         stages: [pre-push]
 
+      - id: backup-data
+        name: Backup category map and history DB
+        entry: python
+        args: ['scripts/backup-data.py']
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+
       - id: test-vitest
         name: Run Vitest suite
         entry: npx vitest
