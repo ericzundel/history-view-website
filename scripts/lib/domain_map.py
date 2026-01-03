@@ -14,6 +14,9 @@ import yaml
 from lib.utils import coerce_str, ensure_list, ensure_mapping, merge_lists, normalize_tag
 
 
+# @dataclass tells Python to auto-generate common boilerplate for a class
+#  based on its type-annotated fields. It creates methods like __init__,
+# __repr__, and __eq__ (and optionally ordering, default values, etc.)
 @dataclass
 class DomainMapping:
     """Mapping entry for a single domain.

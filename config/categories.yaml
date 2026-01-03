@@ -8,7 +8,7 @@ categories:
   - tag: 'social'
     label: Social Media
     type: primary
-  - tag: 'searchdiscovery'
+  - tag: 'search'
     label: Search & Discovery
     type: primary
   - tag: 'softwaredev'
@@ -23,73 +23,73 @@ categories:
   - tag: 'productivity'
     label: Productivity & Organization
     type: primary
-  - tag: 'messagingchat'
+  - tag: 'messaging'
     label: Messaging & Chat
     type: primary
   - tag: 'emailcalendar'
     label: Email & Calendar
     type: primary
-  - tag: 'commerceshopping'
+  - tag: 'shopping'
     label: Commerce & Shopping
     type: primary
-  - tag: 'financepersonal'
+  - tag: 'finance'
     label: Personal Finance
     type: primary
   - tag: 'bankingpayments'
     label: Banking & Payments
     type: primary
-  - tag: 'investingwealth'
+  - tag: 'investing'
     label: Investing & Wealth
     type: primary
   - tag: 'insurance'
     label: Insurance
     type: primary
-  - tag: 'healthmedical'
+  - tag: 'health'
     label: Health & Medical
     type: primary
-  - tag: 'fitnesswellness'
+  - tag: 'wellness'
     label: Fitness & Wellness
     type: primary
-  - tag: 'foodcooking'
+  - tag: 'food'
     label: Food & Cooking
     type: primary
   - tag: 'travel'
     label: Travel
     type: primary
-  - tag: 'transportationmobility'
+  - tag: 'transportation'
     label: Transportation & Mobility
     type: primary
-  - tag: 'governmentservices'
+  - tag: 'government'
     label: Government Services
     type: primary
-  - tag: 'politicscivics'
+  - tag: 'politics'
     label: Politics & Civics
     type: primary
   - tag: 'legal'
     label: Legal
     type: primary
-  - tag: 'educationlearning'
+  - tag: 'education'
     label: Education & Learning
     type: primary
-  - tag: 'researchacademic'
+  - tag: 'academic'
     label: Research & Academia
     type: primary
-  - tag: 'scienceengineering'
+  - tag: 'science'
     label: Science & Engineering
     type: primary
-  - tag: 'hardwaregadgets'
+  - tag: 'hardware'
     label: Hardware & Gadgets
     type: primary
   - tag: 'gaming'
     label: Gaming
     type: primary
-  - tag: 'entertainmentvideo'
+  - tag: 'entertainment'
     label: Entertainment & Video
     type: primary
-  - tag: 'musicaudio'
+  - tag: 'music'
     label: Music & Audio
     type: primary
-  - tag: 'photosmediacreation'
+  - tag: 'mediacreation'
     label: Photos & Media Creation
     type: primary
   - tag: 'sports'
@@ -101,25 +101,22 @@ categories:
   - tag: 'realestate'
     label: Real Estate
     type: primary
-  - tag: 'careerjobs'
+  - tag: 'career'
     label: Careers & Jobs
     type: primary
-  - tag: 'businessops'
+  - tag: 'business'
     label: Business Operations
     type: primary
-  - tag: 'nonprofitphilanthropy'
+  - tag: 'philanthropy'
     label: Nonprofit & Philanthropy
     type: primary
-  - tag: 'religionspirituality'
+  - tag: 'spirituality'
     label: Religion & Spirituality
     type: primary
-  - tag: 'parentingfamily'
+  - tag: 'family'
     label: Parenting & Family
     type: primary
-  - tag: 'petsanimals'
-    label: Pets & Animals
-    type: primary
-  - tag: 'securityprivacy'
+  - tag: 'security'
     label: Security & Privacy
     type: primary
   - tag: 'other'
@@ -278,6 +275,12 @@ categories:
     label: Food Delivery
   - tag: 'groceries'
     label: Groceries & Household
+  - tag: 'bigbox'
+    label: Big Box Retailers
+  - tag: 'departmentstores'
+    label: Department Stores
+  - tag: 'electronicsretail'
+    label: Electronics Retail
 
   # Personal Finance
   - tag: 'budgeting'
@@ -314,6 +317,10 @@ categories:
     label: Investment Research
   - tag: 'optionstrading'
     label: Options Trading
+  - tag: 'wealthmanagement'
+    label: Wealth Management
+  - tag: 'retirement'
+    label: Retirement
 
   # Insurance
   - tag: 'healthinsurance'
@@ -324,6 +331,10 @@ categories:
     label: Home Insurance
   - tag: 'lifeinsurance'
     label: Life Insurance
+  - tag: 'disabilityinsurance'
+    label: Disability Insurance
+  - tag: 'longtermcareinsurance'
+    label: Long-Term Care Insurance
 
   # Health & Medical
   - tag: 'medicalinfo'
@@ -338,6 +349,14 @@ categories:
     label: Mental Health
   - tag: 'medicalresearch'
     label: Medical Research
+  - tag: 'hospitals'
+    label: Hospitals
+  - tag: 'primarycare'
+    label: Primary Care
+  - tag: 'specialists'
+    label: Specialists
+  - tag: 'vision'
+    label: Vision
 
   # Fitness & Wellness
   - tag: 'workouts'
@@ -362,6 +381,12 @@ categories:
     label: Kitchen Tools
   - tag: 'beverages'
     label: Beverages & Coffee
+  - tag: 'snacks'
+    label: Snacks & Treats
+  - tag: 'desserts'
+    label: Desserts
+  - tag: 'healthyfood'
+    label: Healthy Food
 
   # Travel
   - tag: 'flights'
@@ -374,6 +399,10 @@ categories:
     label: Travel Planning
   - tag: 'travelguides'
     label: Travel Guides
+  - tag: 'domestictravel'
+    label: Domestic Travel
+  - tag: 'internationaltravel'
+    label: International Travel
 
   # Transportation & Mobility
   - tag: 'rideshare'
@@ -386,6 +415,10 @@ categories:
     label: Automotive Info
   - tag: 'navigation'
     label: Navigation & Maps
+  - tag: 'traffic'
+    label: Traffic & Road Conditions
+  - tag: 'parking'
+    label: Parking
 
   # Government Services
   - tag: 'cityservices'
@@ -398,6 +431,8 @@ categories:
     label: Public Records
   - tag: 'publicsafety'
     label: Public Safety
+  - tag: 'emergencymanagement'
+    label: Emergency Management
 
   # Politics & Civics
   - tag: 'campaigns'
@@ -410,6 +445,10 @@ categories:
     label: Policy Analysis
   - tag: 'activism'
     label: Activism & Advocacy
+  - tag: 'communityorganizing'
+    label: Community Organizing
+  - tag: 'candidates'
+    label: Candidates
 
   # Legal
   - tag: 'legalresearch'
@@ -438,6 +477,10 @@ categories:
     label: Test Prep
   - tag: 'certificationprograms'
     label: Certification Programs
+  - tag: 'montessori'
+    label: Montessori
+  - tag: 'earlylearning'
+    label: Early Learning
 
   # Research & Academia
   - tag: 'journals'
@@ -462,6 +505,20 @@ categories:
     label: Biology
   - tag: 'climatescience'
     label: Climate Science
+  - tag: 'engineering'
+    label: Engineering
+  - tag: 'civilengineering'
+    label: Civil Engineering
+  - tag: 'electricalengineering'
+    label: Electrical Engineering
+  - tag: 'mechanicalengineering'
+    label: Mechanical Engineering
+  - tag: 'chemicalengineering'
+    label: Chemical Engineering
+  - tag: 'biomedicalengineering'
+    label: Biomedical Engineering
+  - tag: 'climatescience'
+    label: Climate Science
 
   # Hardware & Gadgets
   - tag: 'laptops'
@@ -476,6 +533,12 @@ categories:
     label: Wearables
   - tag: 'makerhardware'
     label: Maker Hardware
+  - tag: '3dprinting'
+    label: 3D Printing
+  - tag: 'videohardware'
+    label: Video Hardware
+  - tag: 'storagehardware'
+    label: Storage Hardware
 
   # Gaming
   - tag: 'pcgaming'
@@ -573,7 +636,7 @@ categories:
   - tag: 'salaryresearch'
     label: Salary Research
 
-  # Business Operations
+  # Business
   - tag: 'crmtools'
     label: CRM Tools
   - tag: 'accounting'
@@ -584,6 +647,12 @@ categories:
     label: Procurement
   - tag: 'businessnews'
     label: Business News
+  - tag: 'businessops'
+    label: Business Operations
+  - tag: 'businessstrategy'
+    label: Business Strategy
+  - tag: 'leadership'
+    label: Leadership
 
   # Nonprofit & Philanthropy
   - tag: 'donations'
@@ -594,6 +663,12 @@ categories:
     label: Grants & Funding
   - tag: 'ngoresources'
     label: NGO Resources
+  - tag: 'socialjustice'
+    label: Social Justice
+  - tag: 'humanrights'
+    label: Human Rights
+  - tag: 'climatejustice'
+    label: Climate Justice
 
   # Religion & Spirituality
   - tag: 'faitheducation'
