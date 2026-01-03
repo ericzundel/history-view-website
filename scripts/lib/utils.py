@@ -94,3 +94,39 @@ def normalize_timestamp(raw: object) -> str:
     else:
         dt = dt.astimezone(UTC)
     return dt.strftime("%Y-%m-%d %H:%M:%S")
+
+
+def normalize_tag(tag: str | None) -> str | None:
+    if tag is None:
+        return None
+    normalized = tag.strip().lower()
+    if normalized.startswith("#"):
+        normalized = normalized[1:]
+    return normalized or None
+
+
+def ensure_mapping(value: object, *, context: str) -> dict[str, Any]:
+    if not isinstance(value, dict):
+        raise ValueError(f"Expected mapping for {context}.")
+    return cast(dict[str, Any], value)
+
+
+def ensure_list(value: object, *, context: str) -> list[Any]:
+    if not isinstance(value, list):
+        raise ValueError(f"Expected list for {context}.")
+    return [cast(Any, item) for item in cast(list[object], value)]
+
+
+def coerce_str(value: object | None) -> str | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    return text or None
+
+
+def merge_lists(existing: list[str], incoming: list[str]) -> list[str]:
+    """Takes two lists and merges them, removing duplicates and returning a sorted list."""
+    new = set(existing)
+    for item in incoming:
+        new.add(item)
+    return sorted(new)

@@ -8,17 +8,22 @@ import os
 import sqlite3
 import time
 from collections.abc import Iterable
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, cast
 
 import httpx
 import yaml
 from dotenv import load_dotenv
+from lib import (
+    DEFAULT_CATEGORY_FILENAME,
+    DEFAULT_DOMAIN_MAP_FILENAME,
+    DEFAULT_MODEL,
+    OPENAI_ENDPOINT,
+)
+from lib.domain_map import DomainMapping, load_domain_map, update_domain_map
 from lib.history_db import resolve_db_path
-
-DEFAULT_MODEL = "gpt-4o-mini"
-OPENAI_ENDPOINT = "https://api.openai.com/v1/chat/completions"
+from lib.utils import coerce_str, ensure_list, ensure_mapping, merge_lists, normalize_tag
 
 load_dotenv()
 
@@ -38,46 +43,12 @@ class DomainEntry:
     title: str | None
 
 
-@dataclass
-class DomainMapping:
-    primary: str | None = None
-    secondary: list[str] = field(default_factory=lambda: [])
-
-
-def normalize_tag(tag: str | None) -> str | None:
-    if tag is None:
-        return None
-    normalized = tag.strip().lower()
-    if normalized.startswith("#"):
-        normalized = normalized[1:]
-    return normalized or None
-
-
-def _ensure_mapping(value: object, *, context: str) -> dict[str, Any]:
-    if not isinstance(value, dict):
-        raise ValueError(f"Expected mapping for {context}.")
-    return cast(dict[str, Any], value)
-
-
-def _ensure_list(value: object, *, context: str) -> list[Any]:
-    if not isinstance(value, list):
-        raise ValueError(f"Expected list for {context}.")
-    return [cast(Any, item) for item in cast(list[object], value)]
-
-
-def _coerce_str(value: object | None) -> str | None:
-    if value is None:
-        return None
-    text = str(value).strip()
-    return text or None
-
-
 def load_categories(path: Path) -> tuple[list[CategoryTag], list[CategoryTag]]:
     payload_obj: object = yaml.safe_load(path.read_text(encoding="utf-8"))
-    payload = _ensure_mapping(payload_obj, context=f"{path}")
+    payload = ensure_mapping(payload_obj, context=f"{path}")
     if "categories" not in payload:
         raise ValueError(f"Expected categories list in {path}")
-    raw_categories = _ensure_list(payload["categories"], context=f"{path} categories")
+    raw_categories = ensure_list(payload["categories"], context=f"{path} categories")
 
     primary: list[CategoryTag] = []
     secondary: list[CategoryTag] = []
@@ -85,12 +56,12 @@ def load_categories(path: Path) -> tuple[list[CategoryTag], list[CategoryTag]]:
         if not isinstance(entry_obj, dict):
             continue
         entry = cast(dict[str, Any], entry_obj)
-        raw_tag_value = _coerce_str(entry.get("tag"))
+        raw_tag_value = coerce_str(entry.get("tag"))
         raw_tag = normalize_tag(raw_tag_value) if raw_tag_value else None
         if not raw_tag:
             continue
-        label = _coerce_str(entry.get("label")) or raw_tag
-        is_primary = (_coerce_str(entry.get("type")) or "").lower() == "primary"
+        label = coerce_str(entry.get("label")) or raw_tag
+        is_primary = (coerce_str(entry.get("type")) or "").lower() == "primary"
         tag = CategoryTag(tag=raw_tag, label=label, is_primary=is_primary)
         if is_primary:
             primary.append(tag)
@@ -100,66 +71,6 @@ def load_categories(path: Path) -> tuple[list[CategoryTag], list[CategoryTag]]:
     if not primary:
         raise ValueError(f"No primary categories found in {path}")
     return primary, secondary
-
-
-def load_domain_map(path: Path) -> dict[str, DomainMapping]:
-    if not path.exists():
-        return {}
-    payload_obj: object = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    payload = _ensure_mapping(payload_obj, context=f"{path}")
-    domains = payload.get("domains", []) or [{}]
-    raw_domains = _ensure_list(domains, context=f"{path} domains")
-
-    mapping: dict[str, DomainMapping] = {}
-    for entry_obj in raw_domains:
-        if not isinstance(entry_obj, dict):
-            continue
-        entry = cast(dict[str, Any], entry_obj)
-        domain = (_coerce_str(entry.get("domain")) or "").lower()
-        if not domain:
-            continue
-        primary = normalize_tag(_coerce_str(entry.get("primary")))
-        secondary_raw: object = entry.get("secondary") or []
-        secondary: list[str] = []
-        if isinstance(secondary_raw, list):
-            for tag_obj in cast(list[object], secondary_raw):
-                normalized = normalize_tag(_coerce_str(tag_obj))
-                if normalized:
-                    secondary.append(normalized)
-        mapping[domain] = DomainMapping(primary=primary, secondary=secondary)
-    return mapping
-
-
-def write_domain_map(path: Path, mapping: dict[str, DomainMapping]) -> None:
-    domains_payload: list[dict[str, Any]] = []
-    for domain in sorted(mapping.keys()):
-        entry = mapping[domain]
-        domains_payload.append(
-            {
-                "domain": domain,
-                "primary": entry.primary,
-                "secondary": entry.secondary,
-            }
-        )
-
-    payload = {"domains": domains_payload}
-    path.write_text(
-        yaml.safe_dump(payload, sort_keys=False, allow_unicode=False),
-        encoding="utf-8",
-    )
-
-
-def update_domain_map(path: Path, mapping: dict[str, DomainMapping]) -> None:
-    existing_mapping = load_domain_map(path)
-    for domain, entry in mapping.items():
-        if domain in existing_mapping:
-            existing_entry = existing_mapping[domain]
-            if entry.primary is not None:
-                existing_entry.primary = entry.primary
-            existing_entry.secondary = merge_secondary(existing_entry.secondary, entry.secondary)
-        else:
-            existing_mapping[domain] = entry
-    write_domain_map(path, existing_mapping)
 
 
 def load_domains_from_db(db_path: Path) -> list[DomainEntry]:
@@ -233,17 +144,7 @@ def request_classifications(
     payload = response.json()
     content = payload["choices"][0]["message"]["content"]
     parsed: object = json.loads(content)
-    return _ensure_mapping(parsed, context="response payload")
-
-
-def merge_secondary(existing: list[str], incoming: list[str]) -> list[str]:
-    seen = set(existing)
-    merged = list(existing)
-    for tag in incoming:
-        if tag not in seen:
-            merged.append(tag)
-            seen.add(tag)
-    return merged
+    return ensure_mapping(parsed, context="response payload")
 
 
 def filter_valid(tags: Iterable[str], allowed: set[str]) -> list[str]:
@@ -279,13 +180,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--categories",
         type=Path,
-        default=Path("config/categories.yaml"),
+        default=Path(DEFAULT_CATEGORY_FILENAME),
         help="Path to categories YAML.",
     )
     parser.add_argument(
         "--map",
         type=Path,
-        default=Path("config/domain-category-map.yaml"),
+        default=Path(DEFAULT_DOMAIN_MAP_FILENAME),
         help="Path to domain-category map YAML.",
     )
     parser.add_argument(
@@ -388,24 +289,22 @@ def main() -> None:
             )
             response = request_classifications(client, model=args.model, messages=messages)
             items_raw: object = response.get("items", [])
-            items = _ensure_list(items_raw, context="response items")
+            items = ensure_list(items_raw, context="response items")
 
             for item_obj in items:
                 if not isinstance(item_obj, dict):
                     continue
                 item = cast(dict[str, Any], item_obj)
-                domain = (_coerce_str(item.get("domain")) or "").lower()
+                domain = (coerce_str(item.get("domain")) or "").lower()
                 if not domain:
                     continue
                 existing = domain_map.get(domain, DomainMapping())
-                primary_raw = normalize_tag(_coerce_str(item.get("primary")))
+                primary_raw = normalize_tag(coerce_str(item.get("primary")))
                 secondary_raw: object = item.get("secondary", [])
                 secondary_list: list[str] = []
                 if isinstance(secondary_raw, list):
                     secondary_list = list(
-                        filter(
-                            None, (_coerce_str(tag) for tag in cast(list[object], secondary_raw))
-                        )
+                        filter(None, (coerce_str(tag) for tag in cast(list[object], secondary_raw)))
                     )
 
                 if not existing.primary:
@@ -413,11 +312,11 @@ def main() -> None:
                         existing.primary = primary_raw
                 secondary_valid = filter_valid(secondary_list, all_tags)
                 if secondary_valid:
-                    existing.secondary = merge_secondary(existing.secondary, secondary_valid)
+                    existing.secondary = merge_lists(existing.secondary, secondary_valid)
                 domain_map[domain] = existing
 
             if args.dry_run:
-                print("Dry run enabled; not writing domain-category-map.yaml.")
+                print(f"Dry run enabled; not writing {args.map}.")
             else:
                 update_domain_map(args.map, domain_map)
 

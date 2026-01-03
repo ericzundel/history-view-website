@@ -148,11 +148,11 @@ class HistoryWriter:
             return False
 
         with self.conn:
-            self._ensure_domain(record.domain, record.title)
+            self.ensure_domain(record.domain, record.title)
             inserted = self._insert_visit_if_new(record.domain, record.timestamp)
         return inserted
 
-    def _ensure_domain(self, domain: str, title: str | None) -> None:
+    def ensure_domain(self, domain: str, title: str | None) -> None:
         row = self.conn.execute("SELECT title FROM domains WHERE domain = ?", (domain,)).fetchone()
         if row is None:
             self.conn.execute(
